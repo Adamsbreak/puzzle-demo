@@ -1,0 +1,83 @@
+{
+  "meta": {
+    "title": "TC-03 middle stop changes future state",
+    "rulePackId": "basic-static"
+  },
+  "rulePack": {
+    "id": "basic-static",
+    "solver": {
+      "enabled": true,
+      "objective": "min-operations",
+      "maxNodes": 3000,
+      "behavior": {
+        "targetLanePriority": "absolute",
+        "edgeGoalRelaxation": "final-step-only",
+        "stopGeneration": "all-legal-stops"
+      }
+    },
+    "goals": [
+      { "type": "all-targets-reach-goals" }
+    ]
+  },
+  "board": {
+    "rows": 2,
+    "cols": 4,
+    "cellSize": 64,
+    "cells": [
+      [
+        { "tags": ["free"] },
+        { "tags": ["free"] },
+        { "tags": ["free"] },
+        { "tags": ["free"] }
+      ],
+      [
+        { "tags": ["blocked"] },
+        { "tags": ["free"] },
+        { "tags": ["free"] },
+        { "tags": ["blocked"] }
+      ]
+    ]
+  },
+  "pieces": [
+    {
+      "id": "t1",
+      "name": "T",
+      "typeId": "target",
+      "role": "target",
+      "row": 0,
+      "col": 0,
+      "w": 1,
+      "h": 1,
+      "moveRule": "free",
+      "movable": true
+    },
+    {
+      "id": "b1",
+      "name": "B",
+      "typeId": "block",
+      "role": "block",
+      "row": 0,
+      "col": 1,
+      "w": 1,
+      "h": 1,
+      "moveRule": "free",
+      "movable": true
+    }
+  ],
+  "zones": [
+    {
+      "id": "g1",
+      "name": "goal",
+      "role": "goal",
+      "shapeKind": "rect",
+      "row": 0,
+      "col": 3,
+      "w": 1,
+      "h": 1,
+      "goalMode": "full",
+      "targetFilter": {
+        "roles": ["target"]
+      }
+    }
+  ]
+}

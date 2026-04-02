@@ -1,0 +1,27 @@
+.DS_Store
+Thumbs.db
+
+# Python
+__pycache__/
+*.pyc
+.venv/
+venv/
+
+# Node
+node_modules/
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+
+# Java / Maven
+target/
+*.class
+
+# Editor / OS
+.idea/
+.vscode/
+*.swp
+
+# Local env
+.env
+.env.*

@@ -1,0 +1,8 @@
+{
+  "name": "puzzle-v1-node-bridge",
+  "private": true,
+  "type": "module",
+  "scripts": {
+    "start": "node server.mjs"
+  }
+}

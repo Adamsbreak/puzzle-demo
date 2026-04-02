@@ -1,0 +1,55 @@
+{
+  "meta": {
+    "title": "example",
+    "rulePackId": "basic-static"
+  },
+  "rulePack": {
+    "id": "basic-static",
+    "solver": {
+      "enabled": true,
+      "objective": "min-operations",
+      "maxNodes": 50000
+    }
+  },
+  "board": {
+    "rows": 4,
+    "cols": 4,
+    "cellSize": 64,
+    "cells": [
+      [{"tags":["free"]},{"tags":["free"]},{"tags":["free"]},{"tags":["free"]}],
+      [{"tags":["free"]},{"tags":["free"]},{"tags":["free"]},{"tags":["free"]}],
+      [{"tags":["free"]},{"tags":["free"]},{"tags":["free"]},{"tags":["free"]}],
+      [{"tags":["free"]},{"tags":["free"]},{"tags":["free"]},{"tags":["free"]}]
+    ]
+  },
+  "pieces": [
+    {
+      "id": "p1",
+      "name": "T",
+      "typeId": "target",
+      "role": "target",
+      "row": 0,
+      "col": 0,
+      "w": 1,
+      "h": 1,
+      "moveRule": "free",
+      "movable": true
+    }
+  ],
+  "zones": [
+    {
+      "id": "z1",
+      "name": "goal",
+      "role": "goal",
+      "shapeKind": "rect",
+      "row": 0,
+      "col": 2,
+      "w": 1,
+      "h": 1,
+      "goalMode": "full",
+      "targetFilter": {
+        "roles": ["target"]
+      }
+    }
+  ]
+}

@@ -1,0 +1,71 @@
+{
+  "meta": {
+    "title": "TC-07 block cannot enter edge goal",
+    "rulePackId": "basic-static"
+  },
+  "rulePack": {
+    "id": "basic-static",
+    "solver": {
+      "enabled": true,
+      "objective": "min-operations",
+      "maxNodes": 2000
+    },
+    "goals": [
+      { "type": "all-targets-reach-goals" }
+    ]
+  },
+  "board": {
+    "rows": 1,
+    "cols": 3,
+    "cellSize": 64,
+    "cells": [
+      [
+        { "tags": ["free"] },
+        { "tags": ["free"] },
+        { "tags": ["free"] }
+      ]
+    ]
+  },
+  "pieces": [
+    {
+      "id": "t1",
+      "name": "T",
+      "typeId": "target",
+      "role": "target",
+      "row": 0,
+      "col": 0,
+      "w": 1,
+      "h": 1,
+      "moveRule": "free",
+      "movable": true
+    },
+    {
+      "id": "b1",
+      "name": "B",
+      "typeId": "block",
+      "role": "block",
+      "row": 0,
+      "col": 1,
+      "w": 1,
+      "h": 1,
+      "moveRule": "free",
+      "movable": true
+    }
+  ],
+  "zones": [
+    {
+      "id": "g1",
+      "name": "edge-goal",
+      "role": "goal",
+      "shapeKind": "edge",
+      "side": "right",
+      "index": 0,
+      "w": 1,
+      "h": 1,
+      "goalMode": "partial",
+      "targetFilter": {
+        "roles": ["target"]
+      }
+    }
+  ]
+}

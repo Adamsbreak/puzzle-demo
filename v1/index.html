@@ -1,0 +1,600 @@
+﻿<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>谜题编辑器 V1</title>
+  <style>
+    :root {
+      --bg: #efe7d7;
+      --panel: #fffaf2;
+      --line: #d5c8b0;
+      --ink: #2e261c;
+      --accent: #b6672d;
+      --soft: #fff6e8;
+      --soft-2: #f4ead8;
+    }
+
+    * { box-sizing: border-box; }
+
+    body {
+      margin: 0;
+      font-family: "Microsoft YaHei", "PingFang SC", sans-serif;
+      background: linear-gradient(135deg, #f5efe2, #e6d8bf);
+      color: var(--ink);
+    }
+
+    .app {
+      display: grid;
+      grid-template-columns: 340px 1fr;
+      min-height: 100vh;
+    }
+
+    .sidebar,
+    .main {
+      padding: 18px;
+    }
+
+    .sidebar {
+      background: #fff8efdd;
+      border-right: 1px solid var(--line);
+      overflow: auto;
+    }
+
+    .panel,
+    .dock-card {
+      background: var(--panel);
+      border: 1px solid var(--line);
+      border-radius: 16px;
+      padding: 14px;
+    }
+
+    .panel {
+      margin-bottom: 14px;
+    }
+
+    h1, h2, h3 {
+      margin: 0 0 10px;
+    }
+
+    h1 { font-size: 24px; }
+    h2 { font-size: 18px; }
+
+    .hint {
+      font-size: 12px;
+      color: #756754;
+      line-height: 1.5;
+    }
+
+    .grid2 {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 10px;
+    }
+
+    label {
+      display: block;
+      font-size: 12px;
+      color: #756754;
+      margin-bottom: 4px;
+    }
+
+    input,
+    select,
+    textarea,
+    button {
+      width: 100%;
+      font: inherit;
+      border: 1px solid var(--line);
+      border-radius: 10px;
+      padding: 8px 10px;
+      background: #fff;
+      color: var(--ink);
+    }
+
+    textarea {
+      min-height: 120px;
+      resize: vertical;
+    }
+
+    button { cursor: pointer; }
+
+    .toolbar {
+      display: flex;
+      gap: 8px;
+      flex-wrap: wrap;
+    }
+
+    .toolbar button,
+    .context-actions button,
+    .mode-strip button,
+    .playback-bar button {
+      width: auto;
+    }
+
+    .tool-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 8px;
+    }
+
+    .zone-tool-grid {
+      grid-template-columns: 1fr;
+    }
+
+    .primary {
+      background: var(--accent);
+      border-color: var(--accent);
+      color: #fff;
+    }
+
+    .tool-button { background: var(--soft); }
+
+    .mode-strip {
+      display: flex;
+      gap: 8px;
+      flex-wrap: wrap;
+    }
+
+    .mode-strip button {
+      background: var(--soft-2);
+    }
+
+    .mode-strip button.active {
+      background: var(--accent);
+      border-color: var(--accent);
+      color: #fff;
+    }
+
+    .list {
+      display: grid;
+      gap: 6px;
+    }
+
+    .list-row,
+    .step-row {
+      background: #fff;
+      width: 100%;
+      text-align: left;
+    }
+
+    .list-row.active,
+    .step-row.active {
+      background: #ffe9c6;
+      border-color: var(--accent);
+    }
+
+    .board-panel,
+    .board-column,
+    .side-rail {
+      display: grid;
+      gap: 14px;
+      align-content: start;
+    }
+
+    .board-workspace {
+      display: grid;
+      grid-template-columns: minmax(0, 1fr) 360px;
+      gap: 14px;
+      align-items: start;
+    }
+
+    .board-shell {
+      display: inline-block;
+      background: #ffffffc8;
+      border: 1px solid var(--line);
+      border-radius: 18px;
+      padding: 18px;
+      user-select: none;
+    }
+
+    .board {
+      display: grid;
+      gap: 0;
+      touch-action: none;
+    }
+
+    .cell-button {
+      padding: 0;
+      border-radius: 0;
+      border: 1px solid rgba(213, 200, 176, 0.95);
+      font-size: 12px;
+      font-weight: 700;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      transition: background 80ms ease, transform 80ms ease, outline 80ms ease;
+    }
+
+    .legend {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 8px;
+      margin-bottom: 12px;
+    }
+
+    .legend-chip {
+      background: var(--soft);
+      border: 1px solid var(--line);
+      border-radius: 999px;
+      padding: 4px 8px;
+      font-size: 12px;
+    }
+
+    .board-dock {
+      display: grid;
+      grid-template-columns: 1.2fr 0.9fr 1fr;
+      gap: 14px;
+    }
+
+    .dock-row {
+      display: grid;
+      grid-template-columns: 1fr auto;
+      gap: 10px;
+      align-items: center;
+      margin-bottom: 10px;
+    }
+
+    .shortcuts {
+      font-size: 12px;
+      color: #756754;
+      line-height: 1.7;
+    }
+
+    .playback-bar {
+      display: flex;
+      gap: 8px;
+      flex-wrap: wrap;
+      margin-top: 10px;
+    }
+
+    .solution-step-info {
+      margin-top: 8px;
+      font-size: 12px;
+      color: #756754;
+      line-height: 1.6;
+      white-space: pre-wrap;
+    }
+
+    .solution-preview-shell {
+      margin-top: 10px;
+      padding: 10px;
+      background: var(--soft);
+      border: 1px solid var(--line);
+      border-radius: 14px;
+      overflow: auto;
+    }
+
+    .solution-board {
+      display: grid;
+      gap: 0;
+      justify-content: start;
+    }
+
+    .solution-cell {
+      width: 26px;
+      height: 26px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      border: 1px solid rgba(213, 200, 176, 0.95);
+      font-size: 10px;
+      font-weight: 700;
+      color: var(--ink);
+    }
+
+    .solution-cell.blank {
+      background: transparent;
+      border-color: transparent;
+    }
+
+    .step-list {
+      display: grid;
+      gap: 6px;
+      margin-top: 10px;
+      max-height: 220px;
+      overflow: auto;
+    }
+
+    #messageBox { white-space: pre-wrap; }
+
+    .context-menu {
+      position: fixed;
+      z-index: 10000;
+      min-width: 240px;
+      max-width: 300px;
+      max-height: min(70vh, 560px);
+      overflow: auto;
+      background: #fffaf2;
+      border: 1px solid var(--line);
+      border-radius: 14px;
+      box-shadow: 0 18px 40px rgba(0, 0, 0, 0.18);
+      padding: 12px;
+    }
+
+    .context-menu[hidden] { display: none; }
+
+    .context-title {
+      font-size: 14px;
+      font-weight: 700;
+      margin-bottom: 10px;
+    }
+
+    .context-body {
+      display: grid;
+      gap: 10px;
+    }
+
+    .context-actions {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 8px;
+    }
+
+    @media (max-width: 1380px) {
+      .board-workspace {
+        grid-template-columns: 1fr;
+      }
+
+      .side-rail {
+        grid-template-columns: repeat(2, minmax(0, 1fr));
+      }
+    }
+
+    @media (max-width: 1080px) {
+      .app {
+        grid-template-columns: 1fr;
+      }
+
+      .board-dock,
+      .side-rail {
+        grid-template-columns: 1fr;
+      }
+    }
+  </style>
+</head>
+<body>
+  <div class="app">
+    <aside class="sidebar">
+      <div class="panel">
+        <h1>谜题编辑器 V1</h1>
+        <div class="hint">
+          这是新的第一阶段基础层目录。结构分成基础层、规则包层和 AI 预留层。当前重点是先把静态谜题编辑器做稳，再让规则包正式接管 UI 和校验逻辑。        </div>
+      </div>
+
+      <div class="panel">
+        <h2>规则包</h2>
+        <strong id="rulePackTitle"></strong>
+        <div id="rulePackSummary" class="hint" style="margin-top:8px"></div>
+      </div>
+
+      <div class="panel">
+        <h2>棋盘</h2>
+        <div class="grid2">
+          <div>
+            <label>行数</label>
+            <input id="boardRows" type="number" min="2" max="20" />
+          </div>
+          <div>
+            <label>列数</label>
+            <input id="boardCols" type="number" min="2" max="20" />
+          </div>
+        </div>
+        <div style="margin-top:10px">
+          <label>格子像素</label>
+          <input id="boardCellSize" type="number" min="36" max="96" />
+        </div>
+        <div class="toolbar" style="margin-top:10px">
+          <button id="applyBoardBtn" class="primary">应用棋盘尺寸</button>
+        </div>
+      </div>
+
+      <div class="panel">
+        <h2>物体</h2>
+        <div id="pieceTypeButtons" class="tool-grid"></div>
+        <div id="pieceList" class="list" style="margin-top:10px"></div>
+        <div id="pieceEditor" hidden style="margin-top:10px">
+          <h3>当前物体</h3>
+          <div class="grid2">
+            <div><label>名称</label><input id="pieceName" /></div>
+            <div><label>行</label><input id="pieceRow" type="number" /></div>
+            <div><label>列</label><input id="pieceCol" type="number" /></div>
+            <div><label>宽</label><input id="pieceW" type="number" min="1" /></div>
+            <div><label>高</label><input id="pieceH" type="number" min="1" /></div>
+          </div>
+          <div class="toolbar" style="margin-top:10px">
+            <button id="applyPieceBtn" class="primary">应用物体</button>
+            <button id="deletePieceBtn">删除物体</button>
+          </div>
+        </div>
+      </div>
+
+      <div class="panel">
+        <h2>区域</h2>
+        <div id="zoneList" class="list" style="margin-top:10px"></div>
+        <div id="zoneEditor" hidden style="margin-top:10px">
+          <h3>当前区域</h3>
+          <div class="grid2">
+            <div><label>名称</label><input id="zoneName" /></div>
+            <div>
+              <label>形状</label>
+              <select id="zoneShapeKind">
+                <option value="rect">矩形</option>
+                <option value="edge">边缘</option>
+              </select>
+            </div>
+            <div><label>行</label><input id="zoneRow" type="number" /></div>
+            <div><label>列</label><input id="zoneCol" type="number" /></div>
+            <div>
+              <label>边</label>
+              <select id="zoneSide">
+                <option value="top">上边</option>
+                <option value="right">右边</option>
+                <option value="bottom">下边</option>
+                <option value="left">左边</option>
+              </select>
+            </div>
+            <div><label>起始格</label><input id="zoneIndex" type="number" /></div>
+            <div><label>宽</label><input id="zoneW" type="number" min="1" /></div>
+            <div><label>高</label><input id="zoneH" type="number" min="1" /></div>
+            <div>
+              <label>终点判定</label>
+              <select id="zoneGoalMode">
+                <option value="full">完全进入</option>
+                <option value="partial">部分进入即可</option>
+              </select>
+            </div>
+          </div>
+          <div class="toolbar" style="margin-top:10px">
+            <button id="applyZoneBtn" class="primary">应用区域</button>
+            <button id="deleteZoneBtn">删除区域</button>
+          </div>
+        </div>
+      </div>
+    </aside>
+
+    <main class="main">
+      <div class="panel">
+        <h2>状态说明</h2>
+        <div id="messageBox" class="hint"></div>
+      </div>
+
+      <div class="board-panel">
+        <div class="board-workspace">
+          <div class="board-column">
+            <div class="panel">
+              <div class="legend">
+                <div class="legend-chip">T = 目标物</div>
+                <div class="legend-chip">B = 障碍物</div>
+                <div class="legend-chip">F = 固定块</div>
+                <div class="legend-chip">G = 终点区</div>
+                <div class="legend-chip">S = 出生区</div>
+              </div>
+              <div class="board-shell">
+                <div id="board" class="board"></div>
+              </div>
+              <div class="hint" style="margin-top:10px">
+                左键会根据当前模式执行拖拽物体或批量涂格。右键可以直接对格子、物体、区域呼出快捷菜单。</div>
+            </div>
+
+            <div class="board-dock">
+              <div class="dock-card">
+                <h2>棋盘下方工具</h2>
+
+                <div class="dock-row">
+                  <div>
+                    <label>交互模式</label>
+                    <div class="mode-strip">
+                      <button id="modeInteractBtn" type="button">对象模式</button>
+                      <button id="modePaintBtn" type="button">涂格模式</button>
+                    </div>
+                  </div>
+                  <div class="hint">决定左键是拖动物体、区域，还是批量刷格子标签。</div>
+                </div>
+
+                <div class="dock-row">
+                  <div>
+                    <label>拖拽模式</label>
+                    <div class="mode-strip">
+                      <button id="dragGridBtn" type="button">验证模式</button>
+                      <button id="dragFreeBtn" type="button">设计模式</button>
+                    </div>
+                  </div>
+                  <div class="hint">验证模式按格吸附，设计模式保留悬浮预览。</div>
+                </div>
+
+                <div class="dock-row">
+                  <div>
+                    <label>当前格子标签</label>
+                    <select id="cellTagSelect"></select>
+                  </div>
+                  <div class="hint">用于批量涂格和右键菜单。</div>
+                </div>
+
+                <div class="toolbar">
+                  <button id="paintAddBtn" class="primary" type="button">添加标签</button>
+                  <button id="paintRemoveBtn" type="button">移除标签</button>
+                  <button id="paintClearBtn" type="button">清空格子</button>
+                </div>
+              </div>
+
+              <div class="dock-card">
+                <h2>添加区域</h2>
+                <div id="zoneButtons" class="tool-grid zone-tool-grid"></div>
+                <div class="hint" style="margin-top:10px">
+                  把终点区和出生区的新增入口放到棋盘下方，设计时更顺手。                </div>
+              </div>
+
+              <div class="dock-card">
+                <h2>快捷操作</h2>
+                <div class="shortcuts">
+                  右键格子：快速添加、移除、清空格子标签。<br />
+                  右键物体：快速改尺寸、颜色、运动规则、复制和删除。<br />
+                  右键区域：快速改尺寸、颜色和位置。<br />
+                  Ctrl + C / Ctrl + V：复制粘贴当前选中的物体或区域。<br />
+                  Delete：删除当前选中的物体或区域。<br />
+                  涂格模式下可以直接跨过物体批量刷格子。                </div>
+              </div>
+            </div>
+          </div>
+
+          <aside class="side-rail">
+            <div class="panel">
+              <h2>检查与求解</h2>
+              <div class="toolbar">
+                <button id="validateBtn" class="primary">检查谜题</button>
+                <button id="solveBtn">调用求解器接口</button>
+              </div>
+              <textarea id="solverOutput" readonly style="margin-top:10px"></textarea>
+            </div>
+
+            <div class="panel">
+              <h2>解题回放</h2>
+              <div id="solutionSummary" class="hint">求解完成后，可以在这里按步回放。</div>
+              <div class="playback-bar">
+                <button id="solutionResetBtn" type="button">回到起点</button>
+                <button id="solutionPrevBtn" type="button">上一步</button>
+                <button id="solutionPlayBtn" type="button">自动播放</button>
+                <button id="solutionNextBtn" type="button">下一步</button>
+              </div>
+              <div id="solutionStepInfo" class="solution-step-info"></div>
+              <div class="solution-preview-shell">
+                <div id="solutionPreviewBoard" class="solution-board"></div>
+              </div>
+              <div id="solutionSteps" class="step-list"></div>
+            </div>
+
+            <div class="panel">
+              <h2>导入导出</h2>
+              <textarea id="jsonBox"></textarea>
+              <div class="toolbar" style="margin-top:10px">
+                <button id="exportBtn" class="primary">导出 JSON</button>
+                <button id="importBtn">导入 JSON</button>
+              </div>
+            </div>
+          </aside>
+        </div>
+      </div>
+    </main>
+  </div>
+
+  <div id="contextMenu" class="context-menu" hidden>
+    <div id="contextMenuTitle" class="context-title"></div>
+    <div id="contextMenuBody" class="context-body"></div>
+  </div>
+
+  <script src="./foundation/core/contracts.js"></script>
+  <script src="./foundation/core/state.js"></script>
+  <script src="./foundation/core/runtime.js"></script>
+  <script src="./foundation/solver/adapter.js"></script>
+  <script src="./foundation/solver/node-bridge-adapter.js"></script>
+  <script src="./rulepacks/basic-static/rulepack.js"></script>
+  <script src="./ai/adapter.js"></script>
+  <script src="./foundation/ui/app.js"></script>
+  <script>
+    window.addEventListener("DOMContentLoaded", function () {
+      window.PuzzleV1.mountV1App();
+    });
+  </script>
+</body>
+</html>

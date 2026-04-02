@@ -1,0 +1,62 @@
+{
+  "meta": {
+    "title": "TC-06 edge goal full",
+    "rulePackId": "basic-static"
+  },
+  "rulePack": {
+    "id": "basic-static",
+    "solver": {
+      "enabled": true,
+      "objective": "min-operations",
+      "maxNodes": 1000
+    },
+    "goals": [
+      { "type": "all-targets-reach-goals" }
+    ]
+  },
+  "board": {
+    "rows": 2,
+    "cols": 2,
+    "cellSize": 64,
+    "cells": [
+      [
+        { "tags": ["free"] },
+        { "tags": ["free"] }
+      ],
+      [
+        { "tags": ["free"] },
+        { "tags": ["free"] }
+      ]
+    ]
+  },
+  "pieces": [
+    {
+      "id": "t1",
+      "name": "T",
+      "typeId": "target",
+      "role": "target",
+      "row": 0,
+      "col": 0,
+      "w": 2,
+      "h": 2,
+      "moveRule": "free",
+      "movable": true
+    }
+  ],
+  "zones": [
+    {
+      "id": "g1",
+      "name": "edge-goal",
+      "role": "goal",
+      "shapeKind": "edge",
+      "side": "right",
+      "index": 0,
+      "w": 1,
+      "h": 2,
+      "goalMode": "full",
+      "targetFilter": {
+        "roles": ["target"]
+      }
+    }
+  ]
+}
