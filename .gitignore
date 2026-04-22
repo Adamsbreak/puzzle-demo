@@ -25,3 +25,7 @@ target/
 # Local env
 .env
 .env.*
+
+# Local chat/session storage
+backend/data/
+*.sqlite3

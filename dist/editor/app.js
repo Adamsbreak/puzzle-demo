@@ -29,6 +29,27 @@ const menuBox = $("menuBox");
 const modalMask = $("modalMask");
 const modalBody = $("modalBody");
 const modalTitle = $("modalTitle");
+const DEFAULT_SOLVER_BRIDGE_URL = "http://127.0.0.1:3210";
+const BRIDGE_RULE_PACK = {
+  id: "basic-static",
+  goals: [{ type: "all-targets-reach-goals" }],
+  solver: {
+    enabled: true,
+    objective: "min-operations",
+    maxNodes: 50000,
+    behavior: {
+      targetLanePriority: "absolute",
+      edgeGoalRelaxation: "final-step-only",
+      stopGeneration: "all-legal-stops",
+    },
+    interfaces: {
+      movePolicy: "static-v1",
+      goalPolicy: "static-v1",
+      validator: "static-v1",
+    },
+    extensionConfig: {},
+  },
+};
 
 let modalHandler = null;
 let isPainting = false;
@@ -612,6 +633,126 @@ function renderPieces() {
   });
 }
 
+function getSolverMode() {
+  return $("solverModeSelect")?.value || "local-ts";
+}
+
+function getSolverBridgeUrl() {
+  return ($("solverBridgeUrlInput")?.value || DEFAULT_SOLVER_BRIDGE_URL).trim() || DEFAULT_SOLVER_BRIDGE_URL;
+}
+
+function translateCellTagsForBridge(tags) {
+  return (tags || []).flatMap((tag) => {
+    if (tag === "target-zone") {
+      return ["target-lane"];
+    }
+    if (["free", "horizontal", "vertical", "blocked"].includes(tag)) {
+      return [tag];
+    }
+    return [];
+  });
+}
+
+function translatePieceForBridge(piece) {
+  const isFixed = piece.moveRule === "blocked";
+  return {
+    id: piece.id,
+    name: piece.name,
+    typeId: piece.role === "target" ? "target" : isFixed ? "fixed" : "block",
+    role: piece.role === "target" ? "target" : isFixed ? "fixed" : "block",
+    row: piece.row,
+    col: piece.col,
+    w: piece.w,
+    h: piece.h,
+    moveRule: piece.moveRule,
+    movable: !isFixed,
+  };
+}
+
+function translateZoneFilterForBridge(filter) {
+  if (!filter) {
+    return { roles: ["target"] };
+  }
+
+  const roles = Array.isArray(filter.pieceRoles)
+    ? filter.pieceRoles.map((role) => (role === "target" ? "target" : "block"))
+    : [];
+
+  if (roles.length > 0) {
+    return { roles };
+  }
+
+  return { roles: ["target"] };
+}
+
+function translateZoneForBridge(zone) {
+  return {
+    id: zone.id,
+    name: zone.name,
+    role: zone.role,
+    shapeKind: zone.shapeKind,
+    side: zone.side,
+    index: zone.index,
+    row: zone.row,
+    col: zone.col,
+    w: zone.w,
+    h: zone.h,
+    goalMode: zone.goalMode || "full",
+    targetFilter: translateZoneFilterForBridge(zone.targetFilter),
+  };
+}
+
+function buildBridgePuzzleSpec() {
+  if (state.runtime.wind?.active) {
+    throw new Error("Java bridge 当前只支持静态求解，启用风之后请改用本地 TypeScript 求解器。");
+  }
+
+  const goalZones = state.zones.filter((zone) => zone.role === "goal");
+  if (goalZones.length === 0) {
+    throw new Error("Java bridge 需要显式 goal zone。当前主编辑器里仅靠 target-zone 充当终点的写法不会自动翻译到 Java 求解器。");
+  }
+
+  return {
+    meta: {
+      title: "main-editor-export",
+      rulePackId: BRIDGE_RULE_PACK.id,
+    },
+    board: {
+      rows: state.rows,
+      cols: state.cols,
+      cellSize: state.cellSize,
+      cells: state.cells.map((row) =>
+        row.map((cell) => ({
+          tags: translateCellTagsForBridge(cell.tags),
+        })),
+      ),
+    },
+    pieces: state.pieces.map(translatePieceForBridge),
+    zones: state.zones.map(translateZoneForBridge),
+  };
+}
+
+async function solveViaJavaBridge() {
+  const bridgeUrl = getSolverBridgeUrl();
+  const response = await fetch(`${bridgeUrl}/solve`, {
+    method: "POST",
+    headers: {
+      "Content-Type": "application/json",
+    },
+    body: JSON.stringify({
+      puzzleSpec: buildBridgePuzzleSpec(),
+      rulePack: BRIDGE_RULE_PACK,
+    }),
+  });
+
+  if (!response.ok) {
+    const text = await response.text();
+    throw new Error(`Java bridge 请求失败: ${response.status} ${text}`);
+  }
+
+  return response.json();
+}
+
 function renderBoard() {
   board.style.width = `${state.cols * state.cellSize}px`;
   board.style.height = `${state.rows * state.cellSize}px`;
@@ -689,9 +830,54 @@ function formatSolverResult(result) {
   return `模式: ${result.mode}\n结果: 可解\n最优步数: ${result.steps.length}\n搜索节点: ${result.explored}\n\n${steps}`;
 }
 
-function runSolver() {
-  const result = solvePuzzle(state);
-  solverMessage = formatSolverResult(result);
+function formatBridgeSolverResult(result) {
+  const steps = Array.isArray(result.steps) && result.steps.length > 0
+    ? result.steps
+        .map(
+          (step, index) =>
+            `${index + 1}. ${step.pieceName} (${step.pieceId}) ${step.direction} -> (${step.toRow}, ${step.toCol})`,
+        )
+        .join("\n")
+    : "0 步，当前布局已满足目标。";
+
+  const engine = result.engine || result.transport?.solver || "java";
+  const status = result.status || "unknown";
+  const solved = status === "solved";
+
+  return [
+    "模式: java-bridge",
+    `引擎: ${engine}`,
+    `状态: ${status}`,
+    result.stepCount != null ? `最优步数: ${result.stepCount}` : null,
+    result.exploredNodes != null ? `搜索节点: ${result.exploredNodes}` : null,
+    result.summary ? `说明: ${result.summary}` : null,
+    solved ? null : "提示: 当前结果不是 solved，可能是无解、超限，或 Java 失败后回退到了 JS fallback。",
+    Array.isArray(result.steps) && result.steps.length > 0 ? `\n${steps}` : null,
+  ]
+    .filter(Boolean)
+    .join("\n");
+}
+
+async function runSolver() {
+  const solveButton = $("solveBtn");
+  solveButton.disabled = true;
+  solverMessage = getSolverMode() === "java-bridge" ? "正在调用 Java bridge 求解..." : "正在使用本地 TypeScript 求解...";
+  render();
+
+  try {
+    if (getSolverMode() === "java-bridge") {
+      const result = await solveViaJavaBridge();
+      solverMessage = formatBridgeSolverResult(result);
+    } else {
+      const result = solvePuzzle(state);
+      solverMessage = formatSolverResult(result);
+    }
+  } catch (error) {
+    solverMessage = `求解失败:\n${error instanceof Error ? error.message : String(error)}`;
+  } finally {
+    solveButton.disabled = false;
+  }
+
   render();
 }
 
@@ -706,6 +892,9 @@ function render() {
   $("distCount").textContent = String(state.stats.distance);
   $("windActiveInput").checked = Boolean(state.runtime.wind?.active);
   $("windDirectionInput").value = state.runtime.wind?.direction || "east";
+  if ($("solverBridgeUrlInput") && !$("solverBridgeUrlInput").value) {
+    $("solverBridgeUrlInput").value = DEFAULT_SOLVER_BRIDGE_URL;
+  }
   $("solveOutput").value = solverMessage;
 }
 
@@ -816,7 +1005,9 @@ function bindEvents() {
     render();
   };
 
-  $("solveBtn").onclick = runSolver;
+  $("solveBtn").onclick = () => {
+    void runSolver();
+  };
 
   $("exportBtn").onclick = () => {
     $("jsonBox").value = exportPuzzle(state);

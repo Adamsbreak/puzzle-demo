@@ -174,7 +174,7 @@
 
     .board-workspace {
       display: grid;
-      grid-template-columns: minmax(0, 1fr) 360px;
+      grid-template-columns: minmax(0, 1fr) minmax(320px, 28vw);
       gap: 14px;
       align-items: start;
     }
@@ -192,6 +192,23 @@
       display: grid;
       gap: 0;
       touch-action: none;
+    }
+
+    .board-surface {
+      display: grid;
+      grid-template-columns: auto minmax(280px, 360px);
+      gap: 14px;
+      align-items: start;
+    }
+
+    .board-side-tools {
+      display: grid;
+      gap: 14px;
+      min-width: 0;
+    }
+
+    .board-side-tools .chatbot-card {
+      background: rgba(255, 250, 242, 0.96);
     }
 
     .cell-button {
@@ -225,6 +242,141 @@
       display: grid;
       grid-template-columns: 1.2fr 0.9fr 1fr;
       gap: 14px;
+    }
+
+    .chatbot-shell {
+      background: linear-gradient(180deg, #fffdf8 0%, #f4ead9 100%);
+      border: 1px solid var(--line);
+      border-radius: 24px;
+      box-shadow: 0 20px 44px rgba(69, 51, 24, 0.12);
+      padding: 14px;
+      overflow: hidden;
+    }
+
+    .chatbot-header {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 12px;
+      padding: 4px 4px 14px;
+      border-bottom: 1px solid rgba(213, 200, 176, 0.8);
+    }
+
+    .chatbot-title {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      min-width: 0;
+    }
+
+    .chatbot-avatar {
+      width: 42px;
+      height: 42px;
+      border-radius: 50%;
+      display: grid;
+      place-items: center;
+      background: linear-gradient(135deg, #b6672d, #d5924b);
+      color: #fffaf2;
+      font-weight: 700;
+      letter-spacing: 0.06em;
+      box-shadow: 0 10px 20px rgba(182, 103, 45, 0.24);
+    }
+
+    .chatbot-meta {
+      min-width: 0;
+    }
+
+    .chatbot-meta strong {
+      display: block;
+      font-size: 15px;
+      margin-bottom: 2px;
+    }
+
+    .chatbot-meta .hint {
+      font-size: 12px;
+    }
+
+    .chatbot-status {
+      flex: 0 0 auto;
+      padding: 6px 10px;
+      border-radius: 999px;
+      border: 1px solid rgba(182, 103, 45, 0.28);
+      background: rgba(255, 246, 232, 0.95);
+      color: var(--accent);
+      font-size: 12px;
+      white-space: nowrap;
+    }
+
+    .chatbot-stack {
+      display: grid;
+      gap: 12px;
+      margin-top: 14px;
+    }
+
+    .chatbot-card {
+      background: rgba(255, 250, 242, 0.92);
+      border: 1px solid rgba(213, 200, 176, 0.92);
+      border-radius: 18px;
+      padding: 14px;
+      box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.55);
+    }
+
+    .chatbot-card.chatbot-message {
+      background: linear-gradient(180deg, #fffefb 0%, #fff3df 100%);
+      border-color: rgba(182, 103, 45, 0.24);
+    }
+
+    .scroll-panel {
+      overflow: auto;
+      scrollbar-width: thin;
+      scrollbar-color: rgba(182, 103, 45, 0.4) rgba(244, 234, 216, 0.72);
+    }
+
+    .scroll-panel::-webkit-scrollbar {
+      width: 10px;
+    }
+
+    .scroll-panel::-webkit-scrollbar-track {
+      background: rgba(244, 234, 216, 0.72);
+      border-radius: 999px;
+    }
+
+    .scroll-panel::-webkit-scrollbar-thumb {
+      background: rgba(182, 103, 45, 0.42);
+      border-radius: 999px;
+      border: 2px solid rgba(244, 234, 216, 0.72);
+    }
+
+    .solver-card textarea {
+      min-height: 180px;
+      max-height: 240px;
+    }
+
+    .playback-card .solution-preview-shell,
+    .playback-card .step-list {
+      max-height: 220px;
+    }
+
+    .playback-card .solution-preview-shell {
+      min-height: 120px;
+    }
+
+    .assistant-card {
+      position: relative;
+    }
+
+    .assistant-card::before {
+      content: "AI";
+      position: absolute;
+      top: 14px;
+      right: 14px;
+      padding: 4px 8px;
+      border-radius: 999px;
+      background: rgba(182, 103, 45, 0.1);
+      color: var(--accent);
+      font-size: 11px;
+      font-weight: 700;
+      letter-spacing: 0.08em;
     }
 
     .dock-row {
@@ -296,6 +448,466 @@
       overflow: auto;
     }
 
+    .ai-metrics {
+      display: flex;
+      gap: 8px;
+      flex-wrap: wrap;
+      margin-top: 10px;
+    }
+
+    .metric-chip {
+      background: var(--soft);
+      border: 1px solid var(--line);
+      border-radius: 999px;
+      padding: 5px 10px;
+      font-size: 12px;
+    }
+
+    .ai-output,
+    .ai-trace {
+      white-space: pre-wrap;
+      font-size: 12px;
+      line-height: 1.6;
+    }
+
+    .ai-trace {
+      max-height: 180px;
+      overflow: auto;
+      background: var(--soft);
+      border: 1px solid var(--line);
+      border-radius: 10px;
+      padding: 8px;
+    }
+
+    .ai-chat-shell {
+      display: grid;
+      gap: 12px;
+    }
+
+    .ai-welcome {
+      display: grid;
+      grid-template-columns: 62px 1fr;
+      gap: 12px;
+      align-items: center;
+      padding-bottom: 10px;
+      border-bottom: 1px solid rgba(213, 200, 176, 0.75);
+    }
+
+    .ai-welcome-avatar {
+      width: 62px;
+      height: 62px;
+      border-radius: 20px;
+      background: radial-gradient(circle at 35% 30%, #fff6e8 0%, #f0b56b 38%, #b6672d 100%);
+      display: grid;
+      place-items: center;
+      color: #fff;
+      font-weight: 700;
+      font-size: 20px;
+      box-shadow: 0 12px 24px rgba(182, 103, 45, 0.22);
+    }
+
+    .ai-welcome-copy strong {
+      display: block;
+      font-size: 16px;
+      margin-bottom: 4px;
+    }
+
+    .ai-history-hint {
+      text-align: center;
+      font-size: 12px;
+      color: #8b7c68;
+    }
+
+    .ai-session-shell {
+      display: grid;
+      gap: 10px;
+      padding: 12px;
+      border-radius: 16px;
+      border: 1px solid rgba(213, 200, 176, 0.92);
+      background: linear-gradient(180deg, rgba(255, 252, 247, 0.96), rgba(249, 242, 231, 0.92));
+    }
+
+    .ai-session-head {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 10px;
+    }
+
+    .ai-session-list {
+      display: grid;
+      gap: 8px;
+      max-height: 180px;
+      overflow: auto;
+    }
+
+    .ai-session-btn {
+      width: 100%;
+      display: grid;
+      gap: 4px;
+      justify-items: start;
+      text-align: left;
+      padding: 10px 12px;
+      border-radius: 14px;
+      border: 1px solid rgba(213, 200, 176, 0.95);
+      background: rgba(255, 255, 255, 0.82);
+      color: var(--ink);
+    }
+
+    .ai-session-btn.is-active {
+      border-color: rgba(182, 103, 45, 0.42);
+      background: #fff6e6;
+      box-shadow: 0 10px 24px rgba(182, 103, 45, 0.12);
+    }
+
+    .ai-session-title {
+      font-size: 13px;
+      font-weight: 700;
+    }
+
+    .ai-session-preview {
+      font-size: 12px;
+      color: #6d5c47;
+      line-height: 1.5;
+    }
+
+    .ai-session-meta {
+      font-size: 11px;
+      color: #9a8469;
+    }
+
+    .ai-session-empty {
+      padding: 8px 2px;
+    }
+
+    .ai-chat-thread {
+      display: grid;
+      gap: 10px;
+      max-height: 420px;
+      min-height: 260px;
+      padding-right: 4px;
+      overflow: auto;
+    }
+
+    .ai-message {
+      display: grid;
+      gap: 6px;
+      justify-items: start;
+    }
+
+    .ai-message.user {
+      justify-items: end;
+    }
+
+    .ai-message-meta {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      font-size: 12px;
+      color: #8b7c68;
+    }
+
+    .ai-message-dot {
+      width: 24px;
+      height: 24px;
+      border-radius: 50%;
+      display: inline-grid;
+      place-items: center;
+      background: rgba(182, 103, 45, 0.16);
+      color: var(--accent);
+      font-size: 11px;
+      font-weight: 700;
+    }
+
+    .ai-bubble {
+      max-width: 100%;
+      border-radius: 18px;
+      padding: 12px 14px;
+      line-height: 1.65;
+      background: #fffefb;
+      border: 1px solid rgba(213, 200, 176, 0.92);
+      box-shadow: 0 10px 22px rgba(80, 55, 23, 0.06);
+      white-space: pre-wrap;
+      word-break: break-word;
+    }
+
+    .ai-bubble-text {
+      white-space: pre-wrap;
+      word-break: break-word;
+    }
+
+    .ai-bubble-text.is-thinking-placeholder {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      min-height: 26px;
+      color: #5c4b35;
+      font-weight: 600;
+    }
+
+    .ai-thinking-dots {
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+    }
+
+    .ai-thinking-dot {
+      width: 7px;
+      height: 7px;
+      border-radius: 50%;
+      background: rgba(182, 103, 45, 0.88);
+      animation: aiThinkingPulse 1.15s infinite ease-in-out;
+    }
+
+    .ai-thinking-dot:nth-child(2) {
+      animation-delay: 0.16s;
+    }
+
+    .ai-thinking-dot:nth-child(3) {
+      animation-delay: 0.32s;
+    }
+
+    .ai-stage-progress {
+      display: grid;
+      gap: 10px;
+      margin-bottom: 10px;
+      padding-bottom: 10px;
+      border-bottom: 1px solid rgba(213, 200, 176, 0.75);
+    }
+
+    .ai-stage-status {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      font-size: 12px;
+      color: #7f6546;
+    }
+
+    .ai-stage-indicator {
+      width: 10px;
+      height: 10px;
+      border-radius: 50%;
+      background: rgba(182, 103, 45, 0.34);
+      box-shadow: 0 0 0 0 rgba(182, 103, 45, 0.28);
+    }
+
+    .ai-stage-indicator.is-thinking {
+      background: rgba(182, 103, 45, 0.88);
+      animation: aiStagePulse 1.4s infinite ease-out;
+    }
+
+    .ai-stage-text {
+      font-weight: 600;
+    }
+
+    .ai-stage-list {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 6px;
+    }
+
+    .ai-stage-chip {
+      display: inline-flex;
+      align-items: center;
+      padding: 4px 10px;
+      border-radius: 999px;
+      font-size: 11px;
+      border: 1px solid rgba(213, 200, 176, 0.95);
+      background: rgba(249, 243, 233, 0.92);
+      color: #8d7350;
+    }
+
+    .ai-stage-chip.is-active {
+      border-color: rgba(182, 103, 45, 0.45);
+      background: rgba(255, 238, 214, 0.96);
+      color: #7b471c;
+      box-shadow: 0 8px 18px rgba(182, 103, 45, 0.12);
+    }
+
+    .ai-stage-chip.is-done {
+      border-color: rgba(182, 103, 45, 0.24);
+      background: rgba(255, 248, 239, 0.96);
+      color: #6b9a58;
+    }
+
+    .ai-stage-chip.is-pending {
+      opacity: 0.72;
+    }
+
+    .ai-message.user .ai-bubble {
+      background: linear-gradient(135deg, #b6672d, #d48b43);
+      color: #fffdf7;
+      border-color: rgba(182, 103, 45, 0.4);
+    }
+
+    .ai-chip-group,
+    .ai-tab-group,
+    .ai-action-row {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 8px;
+    }
+
+    .ai-chip,
+    .ai-tab {
+      width: auto;
+      border-radius: 999px;
+      padding: 8px 14px;
+      background: rgba(255, 250, 242, 0.95);
+      border: 1px solid rgba(213, 200, 176, 0.95);
+      color: var(--ink);
+    }
+
+    .ai-chip:hover,
+    .ai-tab:hover {
+      border-color: rgba(182, 103, 45, 0.42);
+      background: #fff7ea;
+    }
+
+    .ai-composer {
+      display: grid;
+      gap: 10px;
+      padding: 12px;
+      border-radius: 18px;
+      border: 1px solid rgba(213, 200, 176, 0.95);
+      background: rgba(255, 255, 255, 0.82);
+      box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.55);
+    }
+
+    .ai-job-card {
+      display: grid;
+      gap: 10px;
+      padding: 12px;
+      border-radius: 16px;
+      border: 1px solid rgba(213, 200, 176, 0.95);
+      background: linear-gradient(180deg, rgba(255, 251, 244, 0.96), rgba(250, 242, 229, 0.92));
+      box-shadow: 0 10px 24px rgba(91, 62, 27, 0.06);
+    }
+
+    .ai-job-head {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 10px;
+      font-size: 13px;
+      font-weight: 700;
+    }
+
+    .ai-job-badge {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      padding: 4px 10px;
+      border-radius: 999px;
+      background: rgba(182, 103, 45, 0.12);
+      color: #8a541f;
+      border: 1px solid rgba(182, 103, 45, 0.22);
+      font-size: 11px;
+      font-weight: 700;
+      text-transform: uppercase;
+    }
+
+    .ai-job-meta {
+      font-size: 12px;
+      color: #7e6950;
+    }
+
+    .ai-job-attempts {
+      max-height: 140px;
+      overflow: auto;
+      white-space: pre-wrap;
+    }
+
+    .ai-composer textarea {
+      min-height: 88px;
+      border: none;
+      padding: 0;
+      background: transparent;
+      resize: none;
+    }
+
+    .ai-composer textarea:focus {
+      outline: none;
+    }
+
+    .ai-composer-bottom {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 10px;
+    }
+
+    .ai-send-btn {
+      width: 44px;
+      height: 44px;
+      flex: 0 0 auto;
+      border-radius: 50%;
+      padding: 0;
+      background: linear-gradient(135deg, #ff8f2f, #ff6c00);
+      border-color: transparent;
+      color: #fff;
+      font-size: 18px;
+      box-shadow: 0 12px 24px rgba(255, 108, 0, 0.24);
+    }
+
+    .ai-send-btn:disabled {
+      opacity: 0.45;
+      cursor: not-allowed;
+      box-shadow: none;
+    }
+
+    .ai-stop-btn {
+      width: auto;
+      min-width: 84px;
+      flex: 0 0 auto;
+      border-radius: 999px;
+      padding: 10px 14px;
+      background: rgba(109, 68, 43, 0.08);
+      border: 1px solid rgba(109, 68, 43, 0.2);
+      color: #6d442b;
+      font-size: 12px;
+      font-weight: 700;
+    }
+
+    .ai-stop-btn:disabled {
+      opacity: 0.45;
+      cursor: not-allowed;
+    }
+
+    .ai-diagnostics {
+      display: grid;
+      gap: 10px;
+      margin-top: 4px;
+    }
+
+    @keyframes aiThinkingPulse {
+      0%,
+      80%,
+      100% {
+        transform: translateY(0) scale(0.8);
+        opacity: 0.32;
+      }
+
+      40% {
+        transform: translateY(-2px) scale(1);
+        opacity: 1;
+      }
+    }
+
+    @keyframes aiStagePulse {
+      0% {
+        box-shadow: 0 0 0 0 rgba(182, 103, 45, 0.26);
+      }
+
+      70% {
+        box-shadow: 0 0 0 10px rgba(182, 103, 45, 0);
+      }
+
+      100% {
+        box-shadow: 0 0 0 0 rgba(182, 103, 45, 0);
+      }
+    }
+
     #messageBox { white-space: pre-wrap; }
 
     .context-menu {
@@ -333,11 +945,15 @@
 
     @media (max-width: 1380px) {
       .board-workspace {
-        grid-template-columns: 1fr;
+        grid-template-columns: minmax(0, 1fr);
       }
 
       .side-rail {
-        grid-template-columns: repeat(2, minmax(0, 1fr));
+        grid-template-columns: minmax(0, 1fr);
+      }
+
+      .board-surface {
+        grid-template-columns: 1fr;
       }
     }
 
@@ -349,6 +965,11 @@
       .board-dock,
       .side-rail {
         grid-template-columns: 1fr;
+      }
+
+      .chatbot-header {
+        align-items: start;
+        flex-direction: column;
       }
     }
   </style>
@@ -470,8 +1091,36 @@
                 <div class="legend-chip">G = 终点区</div>
                 <div class="legend-chip">S = 出生区</div>
               </div>
-              <div class="board-shell">
-                <div id="board" class="board"></div>
+              <div class="board-surface">
+                <div class="board-shell">
+                  <div id="board" class="board"></div>
+                </div>
+                <div class="board-side-tools">
+                  <div class="chatbot-card solver-card">
+                    <h2>检查与求解</h2>
+                    <div class="toolbar">
+                      <button id="validateBtn" class="primary">检查谜题</button>
+                      <button id="solveBtn">调用求解器接口</button>
+                    </div>
+                    <textarea id="solverOutput" class="scroll-panel" readonly style="margin-top:10px"></textarea>
+                  </div>
+
+                  <div class="chatbot-card playback-card">
+                    <h2>解题回放</h2>
+                    <div id="solutionSummary" class="hint">求解完成后，可以在这里按步回放。</div>
+                    <div class="playback-bar">
+                      <button id="solutionResetBtn" type="button">回到起点</button>
+                      <button id="solutionPrevBtn" type="button">上一步</button>
+                      <button id="solutionPlayBtn" type="button">自动播放</button>
+                      <button id="solutionNextBtn" type="button">下一步</button>
+                    </div>
+                    <div id="solutionStepInfo" class="solution-step-info"></div>
+                    <div class="solution-preview-shell scroll-panel">
+                      <div id="solutionPreviewBoard" class="solution-board"></div>
+                    </div>
+                    <div id="solutionSteps" class="step-list scroll-panel"></div>
+                  </div>
+                </div>
               </div>
               <div class="hint" style="margin-top:10px">
                 左键会根据当前模式执行拖拽物体或批量涂格。右键可以直接对格子、物体、区域呼出快捷菜单。</div>
@@ -526,52 +1175,101 @@
               </div>
 
               <div class="dock-card">
-                <h2>快捷操作</h2>
-                <div class="shortcuts">
-                  右键格子：快速添加、移除、清空格子标签。<br />
-                  右键物体：快速改尺寸、颜色、运动规则、复制和删除。<br />
-                  右键区域：快速改尺寸、颜色和位置。<br />
-                  Ctrl + C / Ctrl + V：复制粘贴当前选中的物体或区域。<br />
-                  Delete：删除当前选中的物体或区域。<br />
-                  涂格模式下可以直接跨过物体批量刷格子。                </div>
+                <h2>导入导出</h2>
+                <textarea id="jsonBox"></textarea>
+                <div class="toolbar" style="margin-top:10px">
+                  <button id="exportBtn" class="primary">导出 JSON</button>
+                  <button id="importBtn">导入 JSON</button>
+                </div>
               </div>
             </div>
           </div>
 
-          <aside class="side-rail">
-            <div class="panel">
-              <h2>检查与求解</h2>
-              <div class="toolbar">
-                <button id="validateBtn" class="primary">检查谜题</button>
-                <button id="solveBtn">调用求解器接口</button>
+          <aside class="side-rail chatbot-shell">
+            <div class="chatbot-header">
+              <div class="chatbot-title">
+                <div class="chatbot-avatar">AI</div>
+                <div class="chatbot-meta">
+                  <strong>关卡助手工作台</strong>
+                  <div class="hint">右侧改成聊天机器人风格窗口，保留检查、回放和 AI 对话三段独立交互。</div>
+                </div>
               </div>
-              <textarea id="solverOutput" readonly style="margin-top:10px"></textarea>
+              <div class="chatbot-status">本地协作中</div>
             </div>
 
-            <div class="panel">
-              <h2>解题回放</h2>
-              <div id="solutionSummary" class="hint">求解完成后，可以在这里按步回放。</div>
-              <div class="playback-bar">
-                <button id="solutionResetBtn" type="button">回到起点</button>
-                <button id="solutionPrevBtn" type="button">上一步</button>
-                <button id="solutionPlayBtn" type="button">自动播放</button>
-                <button id="solutionNextBtn" type="button">下一步</button>
-              </div>
-              <div id="solutionStepInfo" class="solution-step-info"></div>
-              <div class="solution-preview-shell">
-                <div id="solutionPreviewBoard" class="solution-board"></div>
-              </div>
-              <div id="solutionSteps" class="step-list"></div>
-            </div>
+            <div class="chatbot-stack">
+              <div class="chatbot-card chatbot-message assistant-card">
+                <h2>AI 助手</h2>
+                <div class="ai-chat-shell">
+                  <div class="ai-welcome">
+                    <div class="ai-welcome-avatar">招</div>
+                    <div class="ai-welcome-copy">
+                      <strong>你好，我是关卡助手</strong>
+                      <div class="hint">你可以直接问我关卡分析、难度建议、修改思路，我会结合当前棋盘做回答。</div>
+                    </div>
+                  </div>
 
-            <div class="panel">
-              <h2>导入导出</h2>
-              <textarea id="jsonBox"></textarea>
-              <div class="toolbar" style="margin-top:10px">
-                <button id="exportBtn" class="primary">导出 JSON</button>
-                <button id="importBtn">导入 JSON</button>
+                  <div class="ai-history-hint">最近对话会保留在当前 session 中，支持连续追问。</div>
+
+                  <div class="ai-session-shell">
+                    <div class="ai-session-head">
+                      <label>对话</label>
+                      <button id="aiNewSessionBtn" class="ai-chip" type="button">新建对话</button>
+                    </div>
+                    <div id="aiSessionList" class="ai-session-list"></div>
+                  </div>
+
+                  <div id="aiMessages" class="ai-chat-thread scroll-panel"></div>
+
+                  <div>
+                    <label>猜你想问</label>
+                    <div id="aiSuggestionChips" class="ai-chip-group"></div>
+                  </div>
+
+                  <div id="aiShortcutTabs" class="ai-tab-group">
+                    <button id="aiAnalyzeBtn" class="ai-tab primary" type="button">分析当前关卡</button>
+                    <button id="aiRefineBtn" class="ai-tab" type="button">给我修改建议</button>
+                    <button id="aiApplyLevelBtn" class="ai-tab" type="button">应用 AI 修改</button>
+                  </div>
+
+                  <div id="aiModifyJobCard" class="ai-job-card" hidden>
+                    <div class="ai-job-head">
+                      <span>后台修改任务</span>
+                      <span id="aiModifyJobBadge" class="ai-job-badge">idle</span>
+                    </div>
+                    <div id="aiModifyJobStatus" class="ai-job-meta">当前没有正在运行的修改任务。</div>
+                    <div id="aiModifyJobStages" class="ai-stage-list"></div>
+                    <div id="aiModifyJobAttempts" class="ai-output hint ai-job-attempts">任务重试信息会显示在这里。</div>
+                  </div>
+
+                  <div class="ai-composer">
+                    <textarea id="aiRequestInput" placeholder="请问你有什么问题？例如：这个关卡为什么不可解？"></textarea>
+                    <div class="ai-composer-bottom">
+                      <div class="hint">自然语言聊天，优先流式输出；失败时自动回退普通模式。</div>
+                      <div class="ai-action-row">
+                        <button id="aiStopBtn" class="ai-stop-btn" type="button">停止生成</button>
+                        <button id="aiSendBtn" class="ai-send-btn" type="button" aria-label="发送">↑</button>
+                      </div>
+                    </div>
+                  </div>
+
+                  <div class="ai-diagnostics">
+                    <div id="aiMetrics" class="ai-metrics"></div>
+                    <div>
+                      <label>状态</label>
+                      <div id="aiResultText" class="ai-output hint">等待 AI 返回结果。</div>
+                    </div>
+                    <div>
+                      <label>警告</label>
+                      <div id="aiWarnings" class="ai-output hint">无额外警告。</div>
+                    </div>
+                    <div>
+                      <label>Tool Trace（debug_ai=1）</label>
+                      <div id="aiTrace" class="ai-trace scroll-panel"></div>
+                    </div>
+                  </div>
+                </div>
               </div>
-            </div>
           </aside>
         </div>
       </div>
@@ -591,6 +1289,7 @@
   <script src="./rulepacks/basic-static/rulepack.js"></script>
   <script src="./ai/adapter.js"></script>
   <script src="./foundation/ui/app.js"></script>
+  <script src="./ai/panel.js"></script>
   <script>
     window.addEventListener("DOMContentLoaded", function () {
       window.PuzzleV1.mountV1App();

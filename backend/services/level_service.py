@@ -58,6 +58,8 @@ def validate_level(level: dict[str, Any], rule_pack: dict[str, Any]) -> dict[str
     board = level.get("board") or {}
     rows = board.get("rows")
     cols = board.get("cols")
+    board_rows = rows if isinstance(rows, int) and rows > 0 else 0
+    board_cols = cols if isinstance(cols, int) and cols > 0 else 0
     cells = board.get("cells")
     if not isinstance(rows, int) or not isinstance(cols, int) or rows <= 0 or cols <= 0:
         errors.append("Board rows/cols must be positive integers.")
@@ -100,7 +102,7 @@ def validate_level(level: dict[str, Any], rule_pack: dict[str, Any]) -> dict[str
         if width <= 0 or height <= 0:
             errors.append(f"Piece {piece_id} must have positive size.")
             continue
-        if row < 0 or col < 0 or row + height > rows or col + width > cols:
+        if row < 0 or col < 0 or row + height > board_rows or col + width > board_cols:
             errors.append(f"Piece {piece_id} is out of board bounds.")
             continue
 
@@ -140,7 +142,7 @@ def validate_level(level: dict[str, Any], rule_pack: dict[str, Any]) -> dict[str
             if not all(isinstance(value, int) for value in [row, col, width, height]):
                 errors.append(f"Zone {zone_id} must have integer row/col/w/h.")
                 continue
-            if row < 0 or col < 0 or width <= 0 or height <= 0 or row + height > rows or col + width > cols:
+            if row < 0 or col < 0 or width <= 0 or height <= 0 or row + height > board_rows or col + width > board_cols:
                 errors.append(f"Rect zone {zone_id} is out of board bounds.")
         else:
             side = zone.get("side")
@@ -154,11 +156,15 @@ def validate_level(level: dict[str, Any], rule_pack: dict[str, Any]) -> dict[str
                 errors.append(f"Edge zone {zone_id} must have integer index/w/h.")
                 continue
             span = width if side in {"top", "bottom"} else height
-            max_span = cols if side in {"top", "bottom"} else rows
+            max_span = board_cols if side in {"top", "bottom"} else board_rows
             if index < 0 or span <= 0 or index + span > max_span:
                 errors.append(f"Edge zone {zone_id} exceeds board edge span.")
 
-    tool_validation = inspect_level(level, rule_pack).get("validation", {})
+    try:
+        tool_validation = inspect_level(level, rule_pack).get("validation", {})
+    except Exception as error:
+        tool_validation = {}
+        warnings.append(f"Tool-side validation could not run cleanly: {error}")
     for finding in tool_validation.get("findings", []):
         if finding not in errors:
             warnings.append(finding)
@@ -171,9 +177,23 @@ def validate_level(level: dict[str, Any], rule_pack: dict[str, Any]) -> dict[str
 
 
 def score_level(level: dict[str, Any], rule_pack: dict[str, Any]) -> dict[str, Any]:
-    inspection = inspect_level(level, rule_pack)
-    solve_summary = build_solve_summary(level, inspection)
     validation = validate_level(level, rule_pack)
+    try:
+        inspection = inspect_level(level, rule_pack)
+        solve_summary = build_solve_summary(level, inspection)
+    except Exception as error:
+        return {
+            "difficulty": "hard",
+            "branching_factor": 0,
+            "redundant_objects": [],
+            "mechanic_usage": {},
+            "teaching_signals": {
+                "dominant_mechanic": None,
+                "single_core_mechanic": False,
+                "estimated_teaching_level": False,
+            },
+            "warnings": validation["warnings"] + [f"Scoring tool could not run cleanly: {error}"],
+        }
     mechanics = inspection.get("mechanics", {})
     frontier = inspection.get("frontier", {})
     cell_tag_counts = mechanics.get("cellTagCounts", {})

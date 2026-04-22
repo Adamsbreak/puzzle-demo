@@ -2002,6 +2002,31 @@
     renderIO();
   }
 
+  function replaceCurrentPuzzleSpec(nextSpec, messageText) {
+    const spec = root.cloneData(nextSpec);
+    state.meta = spec.meta || state.meta;
+    state.board.rows = spec.board.rows;
+    state.board.cols = spec.board.cols;
+    state.board.cellSize = spec.board.cellSize || state.board.cellSize;
+    state.board.cells = spec.board.cells || state.board.cells;
+    state.pieces = spec.pieces || [];
+    state.zones = spec.zones || [];
+    state.zones.forEach(function (zone) {
+      if (!zone.goalMode) zone.goalMode = "full";
+    });
+    state.ui.selectedPieceId = null;
+    state.ui.selectedZoneId = null;
+    state.ui.message = messageText || "已载入新的关卡状态。";
+    state.ui.solveOutput = "";
+    stopPlayback();
+    const playback = playbackState();
+    playback.result = null;
+    playback.snapshots = [];
+    playback.currentIndex = 0;
+    playback.sourceKey = null;
+    render();
+  }
+
   function bindEvents() {
     el("cellTagSelect").onchange = function (event) {
       state.ui.selectedTagId = event.target.value;
@@ -2276,6 +2301,17 @@
       bindEvents();
       bound = true;
     }
+  };
+
+  root.getCurrentPuzzleSpec = function getCurrentPuzzleSpec() {
+    return createPuzzleSpec();
+  };
+
+  root.loadPuzzleSpec = function loadPuzzleSpec(nextSpec, messageText) {
+    if (!state) {
+      throw new Error("V1 app is not mounted yet.");
+    }
+    replaceCurrentPuzzleSpec(nextSpec, messageText);
   };
 })();
 
