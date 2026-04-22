@@ -1,3 +1,4 @@
+<<<<<<< HEAD
 # Puzzle Demo
 
 一个以谜题编辑器为核心的实验仓库，当前推荐从 `v1/` 入口开始使用。
@@ -216,3 +217,6 @@ python -m uvicorn backend.main:app --host 127.0.0.1 --port 8011 --reload
 - [v1/README.md](v1/README.md)
 - [v1/node-bridge/README.md](v1/node-bridge/README.md)
 - [v1/java-solver/README.md](v1/java-solver/README.md)
+=======
+# puzzle-demo
+>>>>>>> origin/main
