@@ -1,0 +1,1338 @@
+{
+  "generated_at_utc": "2026-04-28T08:29:49.740Z",
+  "corpus_size": 23,
+  "sample_count": 24,
+  "k_values": [
+    1,
+    3,
+    5
+  ],
+  "overall": {
+    "hit_rate@1": 0.75,
+    "hit_rate@3": 0.9583,
+    "hit_rate@5": 1,
+    "mrr": 0.8556,
+    "precision@1": 0.75,
+    "precision@3": 0.5139,
+    "precision@5": 0.375,
+    "recall@1": 0.4181,
+    "recall@3": 0.7403,
+    "recall@5": 0.875
+  },
+  "by_category": {
+    "case_lookup": {
+      "hit_rate@1": 0.75,
+      "hit_rate@3": 0.875,
+      "hit_rate@5": 1,
+      "mrr": 0.8375,
+      "precision@1": 0.75,
+      "precision@3": 0.5417,
+      "precision@5": 0.375,
+      "recall@1": 0.4167,
+      "recall@3": 0.8125,
+      "recall@5": 0.9375
+    },
+    "diagnosis": {
+      "hit_rate@1": 0.8333,
+      "hit_rate@3": 1,
+      "hit_rate@5": 1,
+      "mrr": 0.8889,
+      "precision@1": 0.8333,
+      "precision@3": 0.5556,
+      "precision@5": 0.4333,
+      "recall@1": 0.3389,
+      "recall@3": 0.6556,
+      "recall@5": 0.8056
+    },
+    "rule_explanation": {
+      "hit_rate@1": 0.7,
+      "hit_rate@3": 1,
+      "hit_rate@5": 1,
+      "mrr": 0.85,
+      "precision@1": 0.7,
+      "precision@3": 0.4667,
+      "precision@5": 0.34,
+      "recall@1": 0.4667,
+      "recall@3": 0.7333,
+      "recall@5": 0.8667
+    }
+  },
+  "samples": [
+    {
+      "id": "rq_rule_01",
+      "category": "rule_explanation",
+      "query": "什么是 full 和 partial 的区别？",
+      "expected_ids": [
+        "case.tc06_edge_goal_full",
+        "case.tc06_edge_goal_partial",
+        "rules.goal_modes"
+      ],
+      "top_hits": [
+        {
+          "id": "rules.goal_modes",
+          "type": "rule_doc",
+          "title": "Goal modes full versus partial",
+          "score": 8.25
+        },
+        {
+          "id": "case.tc06_edge_goal_partial",
+          "type": "case",
+          "title": "TC-06 edge goal partial",
+          "score": 1.75
+        },
+        {
+          "id": "case.tc06_edge_goal_full",
+          "type": "case",
+          "title": "TC-06 edge goal full",
+          "score": 1.5
+        },
+        {
+          "id": "case.tc01_multiple_legal_stops",
+          "type": "case",
+          "title": "TC-01 multiple legal stops",
+          "score": 0
+        },
+        {
+          "id": "case.tc02_fixed_adjacent_blocks",
+          "type": "case",
+          "title": "TC-02 fixed adjacent blocks",
+          "score": 0
+        }
+      ],
+      "metrics": {
+        "mrr": 1,
+        "hit_rate@1": 1,
+        "precision@1": 1,
+        "recall@1": 0.3333,
+        "hit_rate@3": 1,
+        "precision@3": 1,
+        "recall@3": 1,
+        "hit_rate@5": 1,
+        "precision@5": 0.6,
+        "recall@5": 1
+      }
+    },
+    {
+      "id": "rq_rule_02",
+      "category": "rule_explanation",
+      "query": "为什么大物体不能只看左上角占位？",
+      "expected_ids": [
+        "case.tc04_large_piece_footprint",
+        "rules.large_piece_footprint"
+      ],
+      "top_hits": [
+        {
+          "id": "rules.large_piece_footprint",
+          "type": "rule_doc",
+          "title": "Large piece footprint rules",
+          "score": 13.75
+        },
+        {
+          "id": "case.tc01_multiple_legal_stops",
+          "type": "case",
+          "title": "TC-01 multiple legal stops",
+          "score": 0
+        },
+        {
+          "id": "case.tc02_fixed_adjacent_blocks",
+          "type": "case",
+          "title": "TC-02 fixed adjacent blocks",
+          "score": 0
+        },
+        {
+          "id": "case.tc03_stop_mid_opens_path",
+          "type": "case",
+          "title": "TC-03 stop mid opens path",
+          "score": 0
+        },
+        {
+          "id": "case.tc03_target_lane_priority",
+          "type": "case",
+          "title": "TC-03 target lane priority",
+          "score": 0
+        }
+      ],
+      "metrics": {
+        "mrr": 1,
+        "hit_rate@1": 1,
+        "precision@1": 1,
+        "recall@1": 0.5,
+        "hit_rate@3": 1,
+        "precision@3": 0.3333,
+        "recall@3": 0.5,
+        "hit_rate@5": 1,
+        "precision@5": 0.2,
+        "recall@5": 0.5
+      }
+    },
+    {
+      "id": "rq_rule_03",
+      "category": "rule_explanation",
+      "query": "horizontal 为什么会禁止 vertical 移动？",
+      "expected_ids": [
+        "case.tc05_horizontal_forbids_vertical",
+        "rules.basic_movement",
+        "rules.lanes_and_priority"
+      ],
+      "top_hits": [
+        {
+          "id": "rules.entities_and_tags",
+          "type": "rule_doc",
+          "title": "Core entities, cell tags and zone types",
+          "score": 8
+        },
+        {
+          "id": "rules.lanes_and_priority",
+          "type": "rule_doc",
+          "title": "Lane rules and movement priority",
+          "score": 8
+        },
+        {
+          "id": "case.tc05_horizontal_forbids_vertical",
+          "type": "case",
+          "title": "TC-05 horizontal forbids vertical",
+          "score": 5.75
+        },
+        {
+          "id": "rules.basic_movement",
+          "type": "rule_doc",
+          "title": "Basic movement legality",
+          "score": 5
+        },
+        {
+          "id": "case.tc01_multiple_legal_stops",
+          "type": "case",
+          "title": "TC-01 multiple legal stops",
+          "score": 0
+        }
+      ],
+      "metrics": {
+        "mrr": 0.5,
+        "hit_rate@1": 0,
+        "precision@1": 0,
+        "recall@1": 0,
+        "hit_rate@3": 1,
+        "precision@3": 0.6667,
+        "recall@3": 0.6667,
+        "hit_rate@5": 1,
+        "precision@5": 0.6,
+        "recall@5": 1
+      }
+    },
+    {
+      "id": "rq_rule_04",
+      "category": "rule_explanation",
+      "query": "target-lane 和 horizontal 冲突时应该听谁的？",
+      "expected_ids": [
+        "case.tc03_target_lane_priority",
+        "rules.lanes_and_priority"
+      ],
+      "top_hits": [
+        {
+          "id": "rules.entities_and_tags",
+          "type": "rule_doc",
+          "title": "Core entities, cell tags and zone types",
+          "score": 11
+        },
+        {
+          "id": "rules.lanes_and_priority",
+          "type": "rule_doc",
+          "title": "Lane rules and movement priority",
+          "score": 8
+        },
+        {
+          "id": "case.tc05_horizontal_forbids_vertical",
+          "type": "case",
+          "title": "TC-05 horizontal forbids vertical",
+          "score": 4.25
+        },
+        {
+          "id": "case.tc03_target_lane_priority",
+          "type": "case",
+          "title": "TC-03 target lane priority",
+          "score": 1.25
+        },
+        {
+          "id": "rules.basic_movement",
+          "type": "rule_doc",
+          "title": "Basic movement legality",
+          "score": 1.25
+        }
+      ],
+      "metrics": {
+        "mrr": 0.5,
+        "hit_rate@1": 0,
+        "precision@1": 0,
+        "recall@1": 0,
+        "hit_rate@3": 1,
+        "precision@3": 0.3333,
+        "recall@3": 0.5,
+        "hit_rate@5": 1,
+        "precision@5": 0.4,
+        "recall@5": 1
+      }
+    },
+    {
+      "id": "rq_rule_05",
+      "category": "rule_explanation",
+      "query": "为什么 block 不能进入 edge goal？",
+      "expected_ids": [
+        "case.tc07_block_cannot_enter_edge_goal",
+        "rules.edge_goal_rules"
+      ],
+      "top_hits": [
+        {
+          "id": "rules.entities_and_tags",
+          "type": "rule_doc",
+          "title": "Core entities, cell tags and zone types",
+          "score": 8
+        },
+        {
+          "id": "rules.edge_goal_rules",
+          "type": "rule_doc",
+          "title": "Edge goal admission rules",
+          "score": 6.75
+        },
+        {
+          "id": "rules.goal_modes",
+          "type": "rule_doc",
+          "title": "Goal modes full versus partial",
+          "score": 5.5
+        },
+        {
+          "id": "rules.static_scope",
+          "type": "rule_doc",
+          "title": "Static puzzle scope and solver objective",
+          "score": 5.25
+        },
+        {
+          "id": "case.tc07_block_cannot_enter_edge_goal",
+          "type": "case",
+          "title": "TC-07 block cannot enter edge goal",
+          "score": 4.5
+        }
+      ],
+      "metrics": {
+        "mrr": 0.5,
+        "hit_rate@1": 0,
+        "precision@1": 0,
+        "recall@1": 0,
+        "hit_rate@3": 1,
+        "precision@3": 0.3333,
+        "recall@3": 0.5,
+        "hit_rate@5": 1,
+        "precision@5": 0.4,
+        "recall@5": 1
+      }
+    },
+    {
+      "id": "rq_rule_06",
+      "category": "rule_explanation",
+      "query": "最后一步进入边缘终点为什么可以放宽轨道限制？",
+      "expected_ids": [
+        "case.tc07_edge_goal_last_step_only",
+        "rules.edge_goal_rules"
+      ],
+      "top_hits": [
+        {
+          "id": "rules.edge_goal_rules",
+          "type": "rule_doc",
+          "title": "Edge goal admission rules",
+          "score": 14.5
+        },
+        {
+          "id": "rules.lanes_and_priority",
+          "type": "rule_doc",
+          "title": "Lane rules and movement priority",
+          "score": 2.5
+        },
+        {
+          "id": "rules.search_model",
+          "type": "rule_doc",
+          "title": "Search model and minimum operations objective",
+          "score": 2.5
+        },
+        {
+          "id": "rules.static_scope",
+          "type": "rule_doc",
+          "title": "Static puzzle scope and solver objective",
+          "score": 2.5
+        },
+        {
+          "id": "rules.validation_vs_solving",
+          "type": "rule_doc",
+          "title": "Validation versus solving",
+          "score": 1.25
+        }
+      ],
+      "metrics": {
+        "mrr": 1,
+        "hit_rate@1": 1,
+        "precision@1": 1,
+        "recall@1": 0.5,
+        "hit_rate@3": 1,
+        "precision@3": 0.3333,
+        "recall@3": 0.5,
+        "hit_rate@5": 1,
+        "precision@5": 0.2,
+        "recall@5": 0.5
+      }
+    },
+    {
+      "id": "rq_rule_07",
+      "category": "rule_explanation",
+      "query": "结构合法和可解到底有什么区别？",
+      "expected_ids": [
+        "rules.validation_vs_solving"
+      ],
+      "top_hits": [
+        {
+          "id": "rules.validation_vs_solving",
+          "type": "rule_doc",
+          "title": "Validation versus solving",
+          "score": 9.5
+        },
+        {
+          "id": "rules.basic_movement",
+          "type": "rule_doc",
+          "title": "Basic movement legality",
+          "score": 2.5
+        },
+        {
+          "id": "rules.architecture_node_java",
+          "type": "rule_doc",
+          "title": "Node bridge and Java solver architecture",
+          "score": 1.25
+        },
+        {
+          "id": "case.tc01_multiple_legal_stops",
+          "type": "case",
+          "title": "TC-01 multiple legal stops",
+          "score": 0
+        },
+        {
+          "id": "case.tc02_fixed_adjacent_blocks",
+          "type": "case",
+          "title": "TC-02 fixed adjacent blocks",
+          "score": 0
+        }
+      ],
+      "metrics": {
+        "mrr": 1,
+        "hit_rate@1": 1,
+        "precision@1": 1,
+        "recall@1": 1,
+        "hit_rate@3": 1,
+        "precision@3": 0.3333,
+        "recall@3": 1,
+        "hit_rate@5": 1,
+        "precision@5": 0.2,
+        "recall@5": 1
+      }
+    },
+    {
+      "id": "rq_rule_08",
+      "category": "rule_explanation",
+      "query": "为什么这个系统需要 Node 桥接和 Java 求解器？",
+      "expected_ids": [
+        "rules.architecture_node_java"
+      ],
+      "top_hits": [
+        {
+          "id": "rules.architecture_node_java",
+          "type": "rule_doc",
+          "title": "Node bridge and Java solver architecture",
+          "score": 13.5
+        },
+        {
+          "id": "rules.shared_interfaces",
+          "type": "rule_doc",
+          "title": "Shared legality interfaces",
+          "score": 2
+        },
+        {
+          "id": "rules.validation_vs_solving",
+          "type": "rule_doc",
+          "title": "Validation versus solving",
+          "score": 1.25
+        },
+        {
+          "id": "case.tc01_multiple_legal_stops",
+          "type": "case",
+          "title": "TC-01 multiple legal stops",
+          "score": 0
+        },
+        {
+          "id": "case.tc02_fixed_adjacent_blocks",
+          "type": "case",
+          "title": "TC-02 fixed adjacent blocks",
+          "score": 0
+        }
+      ],
+      "metrics": {
+        "mrr": 1,
+        "hit_rate@1": 1,
+        "precision@1": 1,
+        "recall@1": 1,
+        "hit_rate@3": 1,
+        "precision@3": 0.3333,
+        "recall@3": 1,
+        "hit_rate@5": 1,
+        "precision@5": 0.2,
+        "recall@5": 1
+      }
+    },
+    {
+      "id": "rq_rule_09",
+      "category": "rule_explanation",
+      "query": "红框绿框是求解器的一部分吗？",
+      "expected_ids": [
+        "rules.ui_solver_boundary"
+      ],
+      "top_hits": [
+        {
+          "id": "rules.ui_solver_boundary",
+          "type": "rule_doc",
+          "title": "UI preview versus solver boundary",
+          "score": 9
+        },
+        {
+          "id": "rules.architecture_node_java",
+          "type": "rule_doc",
+          "title": "Node bridge and Java solver architecture",
+          "score": 3.75
+        },
+        {
+          "id": "rules.edge_goal_rules",
+          "type": "rule_doc",
+          "title": "Edge goal admission rules",
+          "score": 1.25
+        },
+        {
+          "id": "rules.validation_vs_solving",
+          "type": "rule_doc",
+          "title": "Validation versus solving",
+          "score": 1.25
+        },
+        {
+          "id": "case.tc01_multiple_legal_stops",
+          "type": "case",
+          "title": "TC-01 multiple legal stops",
+          "score": 0
+        }
+      ],
+      "metrics": {
+        "mrr": 1,
+        "hit_rate@1": 1,
+        "precision@1": 1,
+        "recall@1": 1,
+        "hit_rate@3": 1,
+        "precision@3": 0.3333,
+        "recall@3": 1,
+        "hit_rate@5": 1,
+        "precision@5": 0.2,
+        "recall@5": 1
+      }
+    },
+    {
+      "id": "rq_rule_10",
+      "category": "rule_explanation",
+      "query": "内置求解器追求的是最少格子距离还是最少操作步数？",
+      "expected_ids": [
+        "case.tc08_shortest_operation_count",
+        "rules.search_model",
+        "rules.static_scope"
+      ],
+      "top_hits": [
+        {
+          "id": "rules.search_model",
+          "type": "rule_doc",
+          "title": "Search model and minimum operations objective",
+          "score": 9
+        },
+        {
+          "id": "rules.static_scope",
+          "type": "rule_doc",
+          "title": "Static puzzle scope and solver objective",
+          "score": 9
+        },
+        {
+          "id": "rules.architecture_node_java",
+          "type": "rule_doc",
+          "title": "Node bridge and Java solver architecture",
+          "score": 3.75
+        },
+        {
+          "id": "rules.edge_goal_rules",
+          "type": "rule_doc",
+          "title": "Edge goal admission rules",
+          "score": 2.5
+        },
+        {
+          "id": "rules.validation_vs_solving",
+          "type": "rule_doc",
+          "title": "Validation versus solving",
+          "score": 1.25
+        }
+      ],
+      "metrics": {
+        "mrr": 1,
+        "hit_rate@1": 1,
+        "precision@1": 1,
+        "recall@1": 0.3333,
+        "hit_rate@3": 1,
+        "precision@3": 0.6667,
+        "recall@3": 0.6667,
+        "hit_rate@5": 1,
+        "precision@5": 0.4,
+        "recall@5": 0.6667
+      }
+    },
+    {
+      "id": "rq_case_01",
+      "category": "case_lookup",
+      "query": "我想找一个测试 multiple legal stops 的样例。",
+      "expected_ids": [
+        "case.tc01_multiple_legal_stops"
+      ],
+      "top_hits": [
+        {
+          "id": "case.tc01_multiple_legal_stops",
+          "type": "case",
+          "title": "TC-01 multiple legal stops",
+          "score": 6
+        },
+        {
+          "id": "rules.edge_goal_rules",
+          "type": "rule_doc",
+          "title": "Edge goal admission rules",
+          "score": 2.25
+        },
+        {
+          "id": "rules.search_model",
+          "type": "rule_doc",
+          "title": "Search model and minimum operations objective",
+          "score": 1
+        },
+        {
+          "id": "case.tc02_fixed_adjacent_blocks",
+          "type": "case",
+          "title": "TC-02 fixed adjacent blocks",
+          "score": 0
+        },
+        {
+          "id": "case.tc03_stop_mid_opens_path",
+          "type": "case",
+          "title": "TC-03 stop mid opens path",
+          "score": 0
+        }
+      ],
+      "metrics": {
+        "mrr": 1,
+        "hit_rate@1": 1,
+        "precision@1": 1,
+        "recall@1": 1,
+        "hit_rate@3": 1,
+        "precision@3": 0.3333,
+        "recall@3": 1,
+        "hit_rate@5": 1,
+        "precision@5": 0.2,
+        "recall@5": 1
+      }
+    },
+    {
+      "id": "rq_case_02",
+      "category": "case_lookup",
+      "query": "我需要一个验证大物体 footprint 的 case。",
+      "expected_ids": [
+        "case.tc04_large_piece_footprint",
+        "rules.large_piece_footprint"
+      ],
+      "top_hits": [
+        {
+          "id": "rules.large_piece_footprint",
+          "type": "rule_doc",
+          "title": "Large piece footprint rules",
+          "score": 5.5
+        },
+        {
+          "id": "case.tc04_large_piece_footprint",
+          "type": "case",
+          "title": "TC-04 large piece footprint",
+          "score": 2.7
+        },
+        {
+          "id": "rules.static_scope",
+          "type": "rule_doc",
+          "title": "Static puzzle scope and solver objective",
+          "score": 2.5
+        },
+        {
+          "id": "case.tc06_edge_goal_full",
+          "type": "case",
+          "title": "TC-06 edge goal full",
+          "score": 2.45
+        },
+        {
+          "id": "rules.edge_goal_rules",
+          "type": "rule_doc",
+          "title": "Edge goal admission rules",
+          "score": 1.25
+        }
+      ],
+      "metrics": {
+        "mrr": 1,
+        "hit_rate@1": 1,
+        "precision@1": 1,
+        "recall@1": 0.5,
+        "hit_rate@3": 1,
+        "precision@3": 0.6667,
+        "recall@3": 1,
+        "hit_rate@5": 1,
+        "precision@5": 0.4,
+        "recall@5": 1
+      }
+    },
+    {
+      "id": "rq_case_03",
+      "category": "case_lookup",
+      "query": "有没有 horizontal forbids vertical 的回归例子？",
+      "expected_ids": [
+        "case.tc05_horizontal_forbids_vertical",
+        "rules.lanes_and_priority"
+      ],
+      "top_hits": [
+        {
+          "id": "case.tc05_horizontal_forbids_vertical",
+          "type": "case",
+          "title": "TC-05 horizontal forbids vertical",
+          "score": 9.25
+        },
+        {
+          "id": "rules.entities_and_tags",
+          "type": "rule_doc",
+          "title": "Core entities, cell tags and zone types",
+          "score": 8
+        },
+        {
+          "id": "rules.lanes_and_priority",
+          "type": "rule_doc",
+          "title": "Lane rules and movement priority",
+          "score": 8
+        },
+        {
+          "id": "rules.basic_movement",
+          "type": "rule_doc",
+          "title": "Basic movement legality",
+          "score": 2.5
+        },
+        {
+          "id": "case.tc01_multiple_legal_stops",
+          "type": "case",
+          "title": "TC-01 multiple legal stops",
+          "score": 0
+        }
+      ],
+      "metrics": {
+        "mrr": 1,
+        "hit_rate@1": 1,
+        "precision@1": 1,
+        "recall@1": 0.5,
+        "hit_rate@3": 1,
+        "precision@3": 0.6667,
+        "recall@3": 1,
+        "hit_rate@5": 1,
+        "precision@5": 0.4,
+        "recall@5": 1
+      }
+    },
+    {
+      "id": "rq_case_04",
+      "category": "case_lookup",
+      "query": "我想找 edge goal partial 的样例。",
+      "expected_ids": [
+        "case.tc06_edge_goal_partial",
+        "rules.edge_goal_rules",
+        "rules.goal_modes"
+      ],
+      "top_hits": [
+        {
+          "id": "rules.goal_modes",
+          "type": "rule_doc",
+          "title": "Goal modes full versus partial",
+          "score": 9.75
+        },
+        {
+          "id": "case.tc06_edge_goal_partial",
+          "type": "case",
+          "title": "TC-06 edge goal partial",
+          "score": 7.25
+        },
+        {
+          "id": "rules.edge_goal_rules",
+          "type": "rule_doc",
+          "title": "Edge goal admission rules",
+          "score": 5.5
+        },
+        {
+          "id": "rules.static_scope",
+          "type": "rule_doc",
+          "title": "Static puzzle scope and solver objective",
+          "score": 5.25
+        },
+        {
+          "id": "rules.entities_and_tags",
+          "type": "rule_doc",
+          "title": "Core entities, cell tags and zone types",
+          "score": 4
+        }
+      ],
+      "metrics": {
+        "mrr": 1,
+        "hit_rate@1": 1,
+        "precision@1": 1,
+        "recall@1": 0.3333,
+        "hit_rate@3": 1,
+        "precision@3": 1,
+        "recall@3": 1,
+        "hit_rate@5": 1,
+        "precision@5": 0.6,
+        "recall@5": 1
+      }
+    },
+    {
+      "id": "rq_case_05",
+      "category": "case_lookup",
+      "query": "哪个例子能证明 block 不能进入边缘 goal？",
+      "expected_ids": [
+        "case.tc07_block_cannot_enter_edge_goal",
+        "rules.edge_goal_rules"
+      ],
+      "top_hits": [
+        {
+          "id": "rules.entities_and_tags",
+          "type": "rule_doc",
+          "title": "Core entities, cell tags and zone types",
+          "score": 8
+        },
+        {
+          "id": "rules.edge_goal_rules",
+          "type": "rule_doc",
+          "title": "Edge goal admission rules",
+          "score": 5.25
+        },
+        {
+          "id": "case.tc07_block_cannot_enter_edge_goal",
+          "type": "case",
+          "title": "TC-07 block cannot enter edge goal",
+          "score": 3
+        },
+        {
+          "id": "rules.static_scope",
+          "type": "rule_doc",
+          "title": "Static puzzle scope and solver objective",
+          "score": 2.75
+        },
+        {
+          "id": "rules.large_piece_footprint",
+          "type": "rule_doc",
+          "title": "Large piece footprint rules",
+          "score": 2.5
+        }
+      ],
+      "metrics": {
+        "mrr": 0.5,
+        "hit_rate@1": 0,
+        "precision@1": 0,
+        "recall@1": 0,
+        "hit_rate@3": 1,
+        "precision@3": 0.6667,
+        "recall@3": 1,
+        "hit_rate@5": 1,
+        "precision@5": 0.4,
+        "recall@5": 1
+      }
+    },
+    {
+      "id": "rq_case_06",
+      "category": "case_lookup",
+      "query": "我需要一个测试 final-step-only 放宽的 edge goal case。",
+      "expected_ids": [
+        "case.tc07_edge_goal_last_step_only",
+        "rules.edge_goal_rules"
+      ],
+      "top_hits": [
+        {
+          "id": "rules.edge_goal_rules",
+          "type": "rule_doc",
+          "title": "Edge goal admission rules",
+          "score": 9.25
+        },
+        {
+          "id": "rules.goal_modes",
+          "type": "rule_doc",
+          "title": "Goal modes full versus partial",
+          "score": 5.5
+        },
+        {
+          "id": "rules.static_scope",
+          "type": "rule_doc",
+          "title": "Static puzzle scope and solver objective",
+          "score": 5.25
+        },
+        {
+          "id": "case.tc07_edge_goal_last_step_only",
+          "type": "case",
+          "title": "TC-07 edge goal last step only",
+          "score": 4.7
+        },
+        {
+          "id": "case.tc06_edge_goal_full",
+          "type": "case",
+          "title": "TC-06 edge goal full",
+          "score": 4.45
+        }
+      ],
+      "metrics": {
+        "mrr": 1,
+        "hit_rate@1": 1,
+        "precision@1": 1,
+        "recall@1": 0.5,
+        "hit_rate@3": 1,
+        "precision@3": 0.3333,
+        "recall@3": 0.5,
+        "hit_rate@5": 1,
+        "precision@5": 0.4,
+        "recall@5": 1
+      }
+    },
+    {
+      "id": "rq_case_07",
+      "category": "case_lookup",
+      "query": "有没有 shortest operation count 的最小样例？",
+      "expected_ids": [
+        "case.tc08_shortest_operation_count",
+        "rules.search_model"
+      ],
+      "top_hits": [
+        {
+          "id": "case.tc08_shortest_operation_count",
+          "type": "case",
+          "title": "TC-08 shortest operation count",
+          "score": 6.25
+        },
+        {
+          "id": "rules.search_model",
+          "type": "rule_doc",
+          "title": "Search model and minimum operations objective",
+          "score": 4.25
+        },
+        {
+          "id": "rules.static_scope",
+          "type": "rule_doc",
+          "title": "Static puzzle scope and solver objective",
+          "score": 3.25
+        },
+        {
+          "id": "rules.edge_goal_rules",
+          "type": "rule_doc",
+          "title": "Edge goal admission rules",
+          "score": 1.25
+        },
+        {
+          "id": "case.tc01_multiple_legal_stops",
+          "type": "case",
+          "title": "TC-01 multiple legal stops",
+          "score": 0
+        }
+      ],
+      "metrics": {
+        "mrr": 1,
+        "hit_rate@1": 1,
+        "precision@1": 1,
+        "recall@1": 0.5,
+        "hit_rate@3": 1,
+        "precision@3": 0.6667,
+        "recall@3": 1,
+        "hit_rate@5": 1,
+        "precision@5": 0.4,
+        "recall@5": 1
+      }
+    },
+    {
+      "id": "rq_case_08",
+      "category": "case_lookup",
+      "query": "有没有一个中间停下才能打开后续路径的 case？",
+      "expected_ids": [
+        "case.tc03_stop_mid_opens_path",
+        "rules.search_model"
+      ],
+      "top_hits": [
+        {
+          "id": "rules.edge_goal_rules",
+          "type": "rule_doc",
+          "title": "Edge goal admission rules",
+          "score": 2.5
+        },
+        {
+          "id": "rules.large_piece_footprint",
+          "type": "rule_doc",
+          "title": "Large piece footprint rules",
+          "score": 1.25
+        },
+        {
+          "id": "case.tc01_multiple_legal_stops",
+          "type": "case",
+          "title": "TC-01 multiple legal stops",
+          "score": 1.2
+        },
+        {
+          "id": "case.tc02_fixed_adjacent_blocks",
+          "type": "case",
+          "title": "TC-02 fixed adjacent blocks",
+          "score": 1.2
+        },
+        {
+          "id": "case.tc03_stop_mid_opens_path",
+          "type": "case",
+          "title": "TC-03 stop mid opens path",
+          "score": 1.2
+        }
+      ],
+      "metrics": {
+        "mrr": 0.2,
+        "hit_rate@1": 0,
+        "precision@1": 0,
+        "recall@1": 0,
+        "hit_rate@3": 0,
+        "precision@3": 0,
+        "recall@3": 0,
+        "hit_rate@5": 1,
+        "precision@5": 0.2,
+        "recall@5": 0.5
+      }
+    },
+    {
+      "id": "rq_diag_01",
+      "category": "diagnosis",
+      "query": "为什么一个 2x2 目标物进 1x2 的边缘终点，在 full 下不算完成，但 partial 下算？",
+      "expected_ids": [
+        "case.tc06_edge_goal_full",
+        "case.tc06_edge_goal_partial",
+        "rules.edge_goal_rules",
+        "rules.goal_modes",
+        "rules.large_piece_footprint"
+      ],
+      "top_hits": [
+        {
+          "id": "rules.edge_goal_rules",
+          "type": "rule_doc",
+          "title": "Edge goal admission rules",
+          "score": 8.25
+        },
+        {
+          "id": "rules.goal_modes",
+          "type": "rule_doc",
+          "title": "Goal modes full versus partial",
+          "score": 8.25
+        },
+        {
+          "id": "rules.large_piece_footprint",
+          "type": "rule_doc",
+          "title": "Large piece footprint rules",
+          "score": 5.25
+        },
+        {
+          "id": "case.tc06_edge_goal_partial",
+          "type": "case",
+          "title": "TC-06 edge goal partial",
+          "score": 1.75
+        },
+        {
+          "id": "case.tc06_edge_goal_full",
+          "type": "case",
+          "title": "TC-06 edge goal full",
+          "score": 1.5
+        }
+      ],
+      "metrics": {
+        "mrr": 1,
+        "hit_rate@1": 1,
+        "precision@1": 1,
+        "recall@1": 0.2,
+        "hit_rate@3": 1,
+        "precision@3": 1,
+        "recall@3": 0.6,
+        "hit_rate@5": 1,
+        "precision@5": 1,
+        "recall@5": 1
+      }
+    },
+    {
+      "id": "rq_diag_02",
+      "category": "diagnosis",
+      "query": "为什么 fixed 挨着的时候，别的物体不能从它旁边穿过去？",
+      "expected_ids": [
+        "case.tc02_fixed_adjacent_blocks",
+        "rules.basic_movement"
+      ],
+      "top_hits": [
+        {
+          "id": "rules.entities_and_tags",
+          "type": "rule_doc",
+          "title": "Core entities, cell tags and zone types",
+          "score": 4
+        },
+        {
+          "id": "rules.large_piece_footprint",
+          "type": "rule_doc",
+          "title": "Large piece footprint rules",
+          "score": 3.75
+        },
+        {
+          "id": "case.tc02_fixed_adjacent_blocks",
+          "type": "case",
+          "title": "TC-02 fixed adjacent blocks",
+          "score": 1.75
+        },
+        {
+          "id": "rules.basic_movement",
+          "type": "rule_doc",
+          "title": "Basic movement legality",
+          "score": 1.25
+        },
+        {
+          "id": "rules.edge_goal_rules",
+          "type": "rule_doc",
+          "title": "Edge goal admission rules",
+          "score": 1.25
+        }
+      ],
+      "metrics": {
+        "mrr": 0.3333,
+        "hit_rate@1": 0,
+        "precision@1": 0,
+        "recall@1": 0,
+        "hit_rate@3": 1,
+        "precision@3": 0.3333,
+        "recall@3": 0.5,
+        "hit_rate@5": 1,
+        "precision@5": 0.4,
+        "recall@5": 1
+      }
+    },
+    {
+      "id": "rq_diag_03",
+      "category": "diagnosis",
+      "query": "如果规则要求最少操作步数，为什么不能只生成最远停点？",
+      "expected_ids": [
+        "case.tc01_multiple_legal_stops",
+        "case.tc03_stop_mid_opens_path",
+        "rules.search_model"
+      ],
+      "top_hits": [
+        {
+          "id": "rules.search_model",
+          "type": "rule_doc",
+          "title": "Search model and minimum operations objective",
+          "score": 9
+        },
+        {
+          "id": "rules.static_scope",
+          "type": "rule_doc",
+          "title": "Static puzzle scope and solver objective",
+          "score": 9
+        },
+        {
+          "id": "rules.edge_goal_rules",
+          "type": "rule_doc",
+          "title": "Edge goal admission rules",
+          "score": 3.75
+        },
+        {
+          "id": "rules.large_piece_footprint",
+          "type": "rule_doc",
+          "title": "Large piece footprint rules",
+          "score": 3.75
+        },
+        {
+          "id": "rules.shared_interfaces",
+          "type": "rule_doc",
+          "title": "Shared legality interfaces",
+          "score": 2.5
+        }
+      ],
+      "metrics": {
+        "mrr": 1,
+        "hit_rate@1": 1,
+        "precision@1": 1,
+        "recall@1": 0.3333,
+        "hit_rate@3": 1,
+        "precision@3": 0.3333,
+        "recall@3": 0.3333,
+        "hit_rate@5": 1,
+        "precision@5": 0.2,
+        "recall@5": 0.3333
+      }
+    },
+    {
+      "id": "rq_diag_04",
+      "category": "diagnosis",
+      "query": "为什么说 canOccupyFootprint、canMovePiece、evaluateGoals 这些接口必须跨前端和求解器对齐？",
+      "expected_ids": [
+        "rules.architecture_node_java",
+        "rules.shared_interfaces"
+      ],
+      "top_hits": [
+        {
+          "id": "rules.shared_interfaces",
+          "type": "rule_doc",
+          "title": "Shared legality interfaces",
+          "score": 12
+        },
+        {
+          "id": "rules.architecture_node_java",
+          "type": "rule_doc",
+          "title": "Node bridge and Java solver architecture",
+          "score": 5
+        },
+        {
+          "id": "rules.entities_and_tags",
+          "type": "rule_doc",
+          "title": "Core entities, cell tags and zone types",
+          "score": 3
+        },
+        {
+          "id": "rules.large_piece_footprint",
+          "type": "rule_doc",
+          "title": "Large piece footprint rules",
+          "score": 3
+        },
+        {
+          "id": "rules.validation_vs_solving",
+          "type": "rule_doc",
+          "title": "Validation versus solving",
+          "score": 1.25
+        }
+      ],
+      "metrics": {
+        "mrr": 1,
+        "hit_rate@1": 1,
+        "precision@1": 1,
+        "recall@1": 0.5,
+        "hit_rate@3": 1,
+        "precision@3": 0.6667,
+        "recall@3": 1,
+        "hit_rate@5": 1,
+        "precision@5": 0.4,
+        "recall@5": 1
+      }
+    },
+    {
+      "id": "rq_diag_05",
+      "category": "diagnosis",
+      "query": "为什么 target-lane priority 需要专门做回归测试？",
+      "expected_ids": [
+        "case.tc03_target_lane_priority",
+        "rules.lanes_and_priority"
+      ],
+      "top_hits": [
+        {
+          "id": "case.tc03_target_lane_priority",
+          "type": "case",
+          "title": "TC-03 target lane priority",
+          "score": 8
+        },
+        {
+          "id": "rules.lanes_and_priority",
+          "type": "rule_doc",
+          "title": "Lane rules and movement priority",
+          "score": 8
+        },
+        {
+          "id": "rules.entities_and_tags",
+          "type": "rule_doc",
+          "title": "Core entities, cell tags and zone types",
+          "score": 7
+        },
+        {
+          "id": "case.tc01_multiple_legal_stops",
+          "type": "case",
+          "title": "TC-01 multiple legal stops",
+          "score": 0
+        },
+        {
+          "id": "case.tc02_fixed_adjacent_blocks",
+          "type": "case",
+          "title": "TC-02 fixed adjacent blocks",
+          "score": 0
+        }
+      ],
+      "metrics": {
+        "mrr": 1,
+        "hit_rate@1": 1,
+        "precision@1": 1,
+        "recall@1": 0.5,
+        "hit_rate@3": 1,
+        "precision@3": 0.6667,
+        "recall@3": 1,
+        "hit_rate@5": 1,
+        "precision@5": 0.4,
+        "recall@5": 1
+      }
+    },
+    {
+      "id": "rq_diag_06",
+      "category": "diagnosis",
+      "query": "为什么边缘终点的最后一步需要单独测试？",
+      "expected_ids": [
+        "case.tc07_edge_goal_last_step_only",
+        "rules.edge_goal_rules"
+      ],
+      "top_hits": [
+        {
+          "id": "rules.edge_goal_rules",
+          "type": "rule_doc",
+          "title": "Edge goal admission rules",
+          "score": 12
+        },
+        {
+          "id": "rules.search_model",
+          "type": "rule_doc",
+          "title": "Search model and minimum operations objective",
+          "score": 2.5
+        },
+        {
+          "id": "rules.static_scope",
+          "type": "rule_doc",
+          "title": "Static puzzle scope and solver objective",
+          "score": 2.5
+        },
+        {
+          "id": "case.tc01_multiple_legal_stops",
+          "type": "case",
+          "title": "TC-01 multiple legal stops",
+          "score": 0
+        },
+        {
+          "id": "case.tc02_fixed_adjacent_blocks",
+          "type": "case",
+          "title": "TC-02 fixed adjacent blocks",
+          "score": 0
+        }
+      ],
+      "metrics": {
+        "mrr": 1,
+        "hit_rate@1": 1,
+        "precision@1": 1,
+        "recall@1": 0.5,
+        "hit_rate@3": 1,
+        "precision@3": 0.3333,
+        "recall@3": 0.5,
+        "hit_rate@5": 1,
+        "precision@5": 0.2,
+        "recall@5": 0.5
+      }
+    }
+  ]
+}

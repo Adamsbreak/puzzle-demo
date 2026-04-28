@@ -116,3 +116,50 @@ class LevelAgentResponse(BaseModel):
 
 
 DifficultyLiteral = Literal["easy", "medium", "hard"]
+
+
+class RagSearchRequest(BaseModel):
+    query: str = Field(..., min_length=1)
+    top_k: int = Field(default=5, alias="topK", ge=1, le=20)
+    include_rules: bool = Field(default=True, alias="includeRules")
+    include_cases: bool = Field(default=True, alias="includeCases")
+    build_context: bool = Field(default=True, alias="buildContext")
+
+    model_config = {"populate_by_name": True}
+
+
+class RagSearchHit(BaseModel):
+    id: str
+    type: Literal["rule_doc", "case"]
+    title: str
+    summary: str
+    score: float
+    source_path: str = Field(..., alias="sourcePath")
+    matched_keywords: list[str] = Field(default_factory=list, alias="matchedKeywords")
+    metadata: dict[str, Any] = Field(default_factory=dict)
+
+    model_config = {"populate_by_name": True}
+
+
+class RagSearchResponse(BaseModel):
+    query: str
+    total_hits: int = Field(..., alias="totalHits")
+    hits: list[RagSearchHit]
+    context: str | None = None
+    source_counts: dict[str, int] = Field(default_factory=dict, alias="sourceCounts")
+
+    model_config = {"populate_by_name": True}
+
+
+class RagEvalRequest(BaseModel):
+    dataset_path: str | None = Field(default=None, alias="datasetPath")
+    top_k_values: list[int] = Field(default_factory=lambda: [1, 3, 5], alias="topKValues")
+    include_rules: bool = Field(default=True, alias="includeRules")
+    include_cases: bool = Field(default=True, alias="includeCases")
+
+    model_config = {"populate_by_name": True}
+
+
+class RagEvalResponse(BaseModel):
+    result: dict[str, Any]
+    summary: str

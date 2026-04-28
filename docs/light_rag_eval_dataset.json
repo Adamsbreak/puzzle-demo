@@ -1,0 +1,251 @@
+{
+  "schema_version": "v1",
+  "description": "Evaluation dataset for the lightweight Puzzle V1 RAG prototype. Fields are intentionally simple now and leave room for future plan B integration with richer retrievers and end-to-end agent checks.",
+  "future_extension_notes": [
+    "expected_intent can later be used to score planner routing accuracy",
+    "expected_final_behavior can later be used to score end-to-end generator and critic behavior",
+    "judge_notes can later hold human or model-judge annotations"
+  ],
+  "samples": [
+    {
+      "id": "rq_rule_01",
+      "category": "rule_explanation",
+      "query": "什么是 full 和 partial 的区别？",
+      "expected_rule_ids": ["rules.goal_modes"],
+      "expected_case_ids": ["case.tc06_edge_goal_full", "case.tc06_edge_goal_partial"],
+      "expected_intent": "analysis",
+      "expected_final_behavior": null,
+      "judge_notes": "The answer should explain full versus partial goal satisfaction rather than general movement legality."
+    },
+    {
+      "id": "rq_rule_02",
+      "category": "rule_explanation",
+      "query": "为什么大物体不能只看左上角占位？",
+      "expected_rule_ids": ["rules.large_piece_footprint"],
+      "expected_case_ids": ["case.tc04_large_piece_footprint"],
+      "expected_intent": "analysis",
+      "expected_final_behavior": null,
+      "judge_notes": "The answer should mention whole-footprint validation."
+    },
+    {
+      "id": "rq_rule_03",
+      "category": "rule_explanation",
+      "query": "horizontal 为什么会禁止 vertical 移动？",
+      "expected_rule_ids": ["rules.lanes_and_priority", "rules.basic_movement"],
+      "expected_case_ids": ["case.tc05_horizontal_forbids_vertical"],
+      "expected_intent": "analysis",
+      "expected_final_behavior": null,
+      "judge_notes": "The answer should focus on lane restrictions rather than edge goals."
+    },
+    {
+      "id": "rq_rule_04",
+      "category": "rule_explanation",
+      "query": "target-lane 和 horizontal 冲突时应该听谁的？",
+      "expected_rule_ids": ["rules.lanes_and_priority"],
+      "expected_case_ids": ["case.tc03_target_lane_priority"],
+      "expected_intent": "analysis",
+      "expected_final_behavior": null,
+      "judge_notes": "The answer should mention priority and lane conflict resolution."
+    },
+    {
+      "id": "rq_rule_05",
+      "category": "rule_explanation",
+      "query": "为什么 block 不能进入 edge goal？",
+      "expected_rule_ids": ["rules.edge_goal_rules"],
+      "expected_case_ids": ["case.tc07_block_cannot_enter_edge_goal"],
+      "expected_intent": "analysis",
+      "expected_final_behavior": null,
+      "judge_notes": "The answer should state that edge goals are reserved for matching target pieces."
+    },
+    {
+      "id": "rq_rule_06",
+      "category": "rule_explanation",
+      "query": "最后一步进入边缘终点为什么可以放宽轨道限制？",
+      "expected_rule_ids": ["rules.edge_goal_rules"],
+      "expected_case_ids": ["case.tc07_edge_goal_last_step_only"],
+      "expected_intent": "analysis",
+      "expected_final_behavior": null,
+      "judge_notes": "The answer should mention final-step-only relaxation."
+    },
+    {
+      "id": "rq_rule_07",
+      "category": "rule_explanation",
+      "query": "结构合法和可解到底有什么区别？",
+      "expected_rule_ids": ["rules.validation_vs_solving"],
+      "expected_case_ids": [],
+      "expected_intent": "analysis",
+      "expected_final_behavior": null,
+      "judge_notes": "The answer should contrast validation versus solving."
+    },
+    {
+      "id": "rq_rule_08",
+      "category": "rule_explanation",
+      "query": "为什么这个系统需要 Node 桥接和 Java 求解器？",
+      "expected_rule_ids": ["rules.architecture_node_java"],
+      "expected_case_ids": [],
+      "expected_intent": "analysis",
+      "expected_final_behavior": null,
+      "judge_notes": "The answer should discuss architecture rather than game rules."
+    },
+    {
+      "id": "rq_rule_09",
+      "category": "rule_explanation",
+      "query": "红框绿框是求解器的一部分吗？",
+      "expected_rule_ids": ["rules.ui_solver_boundary"],
+      "expected_case_ids": [],
+      "expected_intent": "analysis",
+      "expected_final_behavior": null,
+      "judge_notes": "The answer should separate UI preview from solver semantics."
+    },
+    {
+      "id": "rq_rule_10",
+      "category": "rule_explanation",
+      "query": "内置求解器追求的是最少格子距离还是最少操作步数？",
+      "expected_rule_ids": ["rules.search_model", "rules.static_scope"],
+      "expected_case_ids": ["case.tc08_shortest_operation_count"],
+      "expected_intent": "analysis",
+      "expected_final_behavior": null,
+      "judge_notes": "The answer should say minimum operation count."
+    },
+    {
+      "id": "rq_case_01",
+      "category": "case_lookup",
+      "query": "我想找一个测试 multiple legal stops 的样例。",
+      "expected_rule_ids": [],
+      "expected_case_ids": ["case.tc01_multiple_legal_stops"],
+      "expected_intent": "analysis",
+      "expected_final_behavior": null,
+      "judge_notes": "The best hit should be TC-01."
+    },
+    {
+      "id": "rq_case_02",
+      "category": "case_lookup",
+      "query": "我需要一个验证大物体 footprint 的 case。",
+      "expected_rule_ids": ["rules.large_piece_footprint"],
+      "expected_case_ids": ["case.tc04_large_piece_footprint"],
+      "expected_intent": "analysis",
+      "expected_final_behavior": null,
+      "judge_notes": "The case and rule should both be relevant."
+    },
+    {
+      "id": "rq_case_03",
+      "category": "case_lookup",
+      "query": "有没有 horizontal forbids vertical 的回归例子？",
+      "expected_rule_ids": ["rules.lanes_and_priority"],
+      "expected_case_ids": ["case.tc05_horizontal_forbids_vertical"],
+      "expected_intent": "analysis",
+      "expected_final_behavior": null,
+      "judge_notes": "Should retrieve the explicit lane restriction case."
+    },
+    {
+      "id": "rq_case_04",
+      "category": "case_lookup",
+      "query": "我想找 edge goal partial 的样例。",
+      "expected_rule_ids": ["rules.goal_modes", "rules.edge_goal_rules"],
+      "expected_case_ids": ["case.tc06_edge_goal_partial"],
+      "expected_intent": "analysis",
+      "expected_final_behavior": null,
+      "judge_notes": "Should retrieve the partial edge-goal case first."
+    },
+    {
+      "id": "rq_case_05",
+      "category": "case_lookup",
+      "query": "哪个例子能证明 block 不能进入边缘 goal？",
+      "expected_rule_ids": ["rules.edge_goal_rules"],
+      "expected_case_ids": ["case.tc07_block_cannot_enter_edge_goal"],
+      "expected_intent": "analysis",
+      "expected_final_behavior": null,
+      "judge_notes": "Should retrieve the blocker edge-goal prohibition case."
+    },
+    {
+      "id": "rq_case_06",
+      "category": "case_lookup",
+      "query": "我需要一个测试 final-step-only 放宽的 edge goal case。",
+      "expected_rule_ids": ["rules.edge_goal_rules"],
+      "expected_case_ids": ["case.tc07_edge_goal_last_step_only"],
+      "expected_intent": "analysis",
+      "expected_final_behavior": null,
+      "judge_notes": "The answer should hit the final-step-only edge-goal case."
+    },
+    {
+      "id": "rq_case_07",
+      "category": "case_lookup",
+      "query": "有没有 shortest operation count 的最小样例？",
+      "expected_rule_ids": ["rules.search_model"],
+      "expected_case_ids": ["case.tc08_shortest_operation_count"],
+      "expected_intent": "analysis",
+      "expected_final_behavior": null,
+      "judge_notes": "The answer should retrieve the shortest-step regression case."
+    },
+    {
+      "id": "rq_case_08",
+      "category": "case_lookup",
+      "query": "有没有一个中间停下才能打开后续路径的 case？",
+      "expected_rule_ids": ["rules.search_model"],
+      "expected_case_ids": ["case.tc03_stop_mid_opens_path"],
+      "expected_intent": "analysis",
+      "expected_final_behavior": null,
+      "judge_notes": "The answer should hit the intermediate stop case."
+    },
+    {
+      "id": "rq_diag_01",
+      "category": "diagnosis",
+      "query": "为什么一个 2x2 目标物进 1x2 的边缘终点，在 full 下不算完成，但 partial 下算？",
+      "expected_rule_ids": ["rules.goal_modes", "rules.edge_goal_rules", "rules.large_piece_footprint"],
+      "expected_case_ids": ["case.tc06_edge_goal_full", "case.tc06_edge_goal_partial"],
+      "expected_intent": "analysis",
+      "expected_final_behavior": null,
+      "judge_notes": "The answer should combine goal mode and edge-goal semantics."
+    },
+    {
+      "id": "rq_diag_02",
+      "category": "diagnosis",
+      "query": "为什么 fixed 挨着的时候，别的物体不能从它旁边穿过去？",
+      "expected_rule_ids": ["rules.basic_movement"],
+      "expected_case_ids": ["case.tc02_fixed_adjacent_blocks"],
+      "expected_intent": "analysis",
+      "expected_final_behavior": null,
+      "judge_notes": "The answer should mention collision and immovable fixed pieces."
+    },
+    {
+      "id": "rq_diag_03",
+      "category": "diagnosis",
+      "query": "如果规则要求最少操作步数，为什么不能只生成最远停点？",
+      "expected_rule_ids": ["rules.search_model"],
+      "expected_case_ids": ["case.tc01_multiple_legal_stops", "case.tc03_stop_mid_opens_path"],
+      "expected_intent": "analysis",
+      "expected_final_behavior": null,
+      "judge_notes": "The answer should mention all legal stops and intermediate state value."
+    },
+    {
+      "id": "rq_diag_04",
+      "category": "diagnosis",
+      "query": "为什么说 canOccupyFootprint、canMovePiece、evaluateGoals 这些接口必须跨前端和求解器对齐？",
+      "expected_rule_ids": ["rules.shared_interfaces", "rules.architecture_node_java"],
+      "expected_case_ids": [],
+      "expected_intent": "analysis",
+      "expected_final_behavior": null,
+      "judge_notes": "The answer should mention semantic alignment across JS, Node and Java."
+    },
+    {
+      "id": "rq_diag_05",
+      "category": "diagnosis",
+      "query": "为什么 target-lane priority 需要专门做回归测试？",
+      "expected_rule_ids": ["rules.lanes_and_priority"],
+      "expected_case_ids": ["case.tc03_target_lane_priority"],
+      "expected_intent": "analysis",
+      "expected_final_behavior": null,
+      "judge_notes": "The answer should mention overlapping lane tags and priority semantics."
+    },
+    {
+      "id": "rq_diag_06",
+      "category": "diagnosis",
+      "query": "为什么边缘终点的最后一步需要单独测试？",
+      "expected_rule_ids": ["rules.edge_goal_rules"],
+      "expected_case_ids": ["case.tc07_edge_goal_last_step_only"],
+      "expected_intent": "analysis",
+      "expected_final_behavior": null,
+      "judge_notes": "The answer should mention the special final-step relaxation."
+    }
+  ]
+}

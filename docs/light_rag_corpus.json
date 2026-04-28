@@ -1,0 +1,190 @@
+{
+  "schema_version": "v1",
+  "description": "Lightweight RAG corpus manifest for Puzzle V1. This is designed for plan A lexical evaluation and leaves room for plugging in a richer retriever later.",
+  "entries": [
+    {
+      "id": "rules.static_scope",
+      "type": "rule_doc",
+      "source_path": "v1/docs/static_solver_rules.md",
+      "title": "Static puzzle scope and solver objective",
+      "summary": "The current solver only handles static puzzles, optimizes for minimum operation count, supports internal and edge goals, and shares legality semantics with the editor validation mode.",
+      "keywords": ["static", "minimum operations", "edge goal", "internal goal", "验证模式", "静态谜题", "最少操作步数"]
+    },
+    {
+      "id": "rules.ui_solver_boundary",
+      "type": "rule_doc",
+      "source_path": "v1/docs/static_solver_rules.md",
+      "title": "UI preview versus solver boundary",
+      "summary": "Red and green preview boxes belong to UI presentation. The solver should reuse legality checks but should not own rendering or DOM behavior.",
+      "keywords": ["red box", "green box", "UI", "preview", "DOM", "solver boundary", "红框", "绿框", "预览"]
+    },
+    {
+      "id": "rules.entities_and_tags",
+      "type": "rule_doc",
+      "source_path": "v1/docs/static_solver_rules.md",
+      "title": "Core entities, cell tags and zone types",
+      "summary": "The rule pack defines free, blocked, horizontal, vertical, target-lane and block-lane cell tags, plus target, block and fixed pieces, and spawn and goal zones.",
+      "keywords": ["free", "blocked", "horizontal", "vertical", "target-lane", "block-lane", "target", "block", "fixed", "spawn", "goal"]
+    },
+    {
+      "id": "rules.goal_modes",
+      "type": "rule_doc",
+      "source_path": "v1/docs/static_solver_rules.md",
+      "title": "Goal modes full versus partial",
+      "summary": "Goal evaluation supports full and partial modes. Full requires the target footprint to be completely inside the goal. Partial only requires some overlap. This applies to both internal and edge goals.",
+      "keywords": ["full", "partial", "goal mode", "overlap", "complete inside", "edge goal", "partial overlap", "goal evaluation"]
+    },
+    {
+      "id": "rules.basic_movement",
+      "type": "rule_doc",
+      "source_path": "v1/docs/static_solver_rules.md",
+      "title": "Basic movement legality",
+      "summary": "A move changes one piece in one orthogonal direction, cannot overlap other pieces, cannot enter blocked cells, and fixed pieces cannot move.",
+      "keywords": ["movement", "orthogonal", "blocked", "fixed cannot move", "overlap", "horizontal move", "vertical move", "合法移动"]
+    },
+    {
+      "id": "rules.large_piece_footprint",
+      "type": "rule_doc",
+      "source_path": "v1/docs/static_solver_rules.md",
+      "title": "Large piece footprint rules",
+      "summary": "Pieces larger than 1x1 move as a whole footprint. Occupancy and collision checks must validate the entire footprint, not just a single anchor cell. Large pieces cannot be split or rotated.",
+      "keywords": ["footprint", "large piece", "2x2", "whole footprint", "collision", "occupancy", "不能只看左上角", "整体占位"]
+    },
+    {
+      "id": "rules.lanes_and_priority",
+      "type": "rule_doc",
+      "source_path": "v1/docs/static_solver_rules.md",
+      "title": "Lane rules and movement priority",
+      "summary": "Horizontal and vertical are normal movement restriction tags. Target-lane and block-lane are role-specific lane constraints. When tags overlap, the configured priority decides which restriction dominates.",
+      "keywords": ["horizontal", "vertical", "target-lane", "block-lane", "priority", "movement restriction", "轨道优先级"]
+    },
+    {
+      "id": "rules.edge_goal_rules",
+      "type": "rule_doc",
+      "source_path": "v1/docs/static_solver_rules.md",
+      "title": "Edge goal admission rules",
+      "summary": "Edge goals are special off-board legal areas only for matching target pieces. Non-target blockers cannot enter edge goals. The final step into a matching edge goal may relax normal lane restrictions.",
+      "keywords": ["edge goal", "off-board", "target only", "block cannot enter edge goal", "final step only", "边缘终点", "最后一步放宽"]
+    },
+    {
+      "id": "rules.shared_interfaces",
+      "type": "rule_doc",
+      "source_path": "v1/docs/static_solver_rules.md",
+      "title": "Shared legality interfaces",
+      "summary": "The architecture recommends shared legality interfaces: canOccupyFootprint, canMovePiece, evaluateGoals and validatePuzzle so that UI, Node and Java stay aligned.",
+      "keywords": ["canOccupyFootprint", "canMovePiece", "evaluateGoals", "validatePuzzle", "shared interface", "规则复用"]
+    },
+    {
+      "id": "rules.validation_vs_solving",
+      "type": "rule_doc",
+      "source_path": "v1/docs/static_solver_rules.md",
+      "title": "Validation versus solving",
+      "summary": "Structural validation checks whether a puzzle is well-formed, such as having target pieces and goals. Solving answers whether a valid puzzle is actually solvable and what the optimal steps are. These must not be confused.",
+      "keywords": ["validation", "solve", "valid but unsolved", "structural validation", "solvable", "结构合法", "可解性"]
+    },
+    {
+      "id": "rules.search_model",
+      "type": "rule_doc",
+      "source_path": "v1/docs/static_solver_rules.md",
+      "title": "Search model and minimum operations objective",
+      "summary": "The baseline static solver uses BFS over puzzle states and legal moves, deduplicates serialized states, and optimizes for minimum operation count rather than shortest geometric distance.",
+      "keywords": ["BFS", "minimum operations", "search", "deduplicate", "serialized state", "最少操作步数"]
+    },
+    {
+      "id": "rules.architecture_node_java",
+      "type": "rule_doc",
+      "source_path": "v1/docs/solver_design_v1.md",
+      "title": "Node bridge and Java solver architecture",
+      "summary": "The recommended path keeps the browser editor in the frontend, uses Node as the local bridge, and uses Java as the formal solver engine. The semantics should stay aligned across layers.",
+      "keywords": ["Node bridge", "Java solver", "architecture", "frontend", "semantic alignment", "Node 桥接", "Java 求解器"]
+    },
+    {
+      "id": "case.tc01_multiple_legal_stops",
+      "type": "case",
+      "source_path": "v1/java-solver/manual-cases/tc01_multiple_legal_stops.json",
+      "title": "TC-01 multiple legal stops",
+      "summary": "One target piece on a 1x5 board with a goal in the middle. Used to verify that the solver can enumerate multiple legal stopping positions in one direction.",
+      "keywords": ["multiple legal stops", "all-legal-stops", "stop generation", "1x5", "middle goal"]
+    },
+    {
+      "id": "case.tc02_fixed_adjacent_blocks",
+      "type": "case",
+      "source_path": "v1/java-solver/manual-cases/tc02_fixed_adjacent_blocks.json",
+      "title": "TC-02 fixed adjacent blocks",
+      "summary": "Regression case for fixed blockers and collision checks. Used to verify that fixed pieces adjacent to movers correctly block the path.",
+      "keywords": ["fixed adjacent blocks", "fixed blocker", "collision", "cannot move through fixed"]
+    },
+    {
+      "id": "case.tc03_stop_mid_opens_path",
+      "type": "case",
+      "source_path": "v1/java-solver/manual-cases/tc03_stop_mid_opens_path.json",
+      "title": "TC-03 stop mid opens path",
+      "summary": "Regression case where an intermediate stop is necessary because stopping earlier changes downstream reachability.",
+      "keywords": ["stop mid", "opens path", "intermediate stop", "reachability", "not just farthest"]
+    },
+    {
+      "id": "case.tc03_target_lane_priority",
+      "type": "case",
+      "source_path": "v1/java-solver/manual-cases/tc03_target_lane_priority.json",
+      "title": "TC-03 target lane priority",
+      "summary": "Regression case for target-lane priority. Used to verify how target-lane interacts with other movement restrictions.",
+      "keywords": ["target-lane priority", "target lane", "priority", "lane conflict", "movement restriction"]
+    },
+    {
+      "id": "case.tc04_large_piece_footprint",
+      "type": "case",
+      "source_path": "v1/java-solver/manual-cases/tc04_large_piece_footprint.json",
+      "title": "TC-04 large piece footprint",
+      "summary": "A 2x2 target piece with nearby fixed obstruction. Used to verify that occupancy and collision checks validate the entire large-piece footprint.",
+      "keywords": ["large piece footprint", "2x2 target", "whole footprint", "occupancy", "collision"]
+    },
+    {
+      "id": "case.tc05_horizontal_forbids_vertical",
+      "type": "case",
+      "source_path": "v1/java-solver/manual-cases/tc05_horizontal_forbids_vertical.json",
+      "title": "TC-05 horizontal forbids vertical",
+      "summary": "Regression case for horizontal lane restrictions. Used to verify that horizontal-constrained movement forbids vertical movement.",
+      "keywords": ["horizontal forbids vertical", "horizontal", "vertical forbidden", "lane restriction"]
+    },
+    {
+      "id": "case.tc06_edge_goal_full",
+      "type": "case",
+      "source_path": "v1/java-solver/manual-cases/tc06_edge_goal_full.json",
+      "title": "TC-06 edge goal full",
+      "summary": "Edge goal case for full mode. Used to verify that full edge goals require the entire target footprint to satisfy the goal.",
+      "keywords": ["edge goal full", "full edge goal", "goal mode", "entire footprint"]
+    },
+    {
+      "id": "case.tc06_edge_goal_partial",
+      "type": "case",
+      "source_path": "v1/java-solver/manual-cases/tc06_edge_goal_partial.json",
+      "title": "TC-06 edge goal partial",
+      "summary": "Edge goal case for partial mode. Used to verify that a large target can satisfy the goal with partial overlap when goalMode is partial.",
+      "keywords": ["edge goal partial", "partial edge goal", "goal mode", "partial overlap"]
+    },
+    {
+      "id": "case.tc07_block_cannot_enter_edge_goal",
+      "type": "case",
+      "source_path": "v1/java-solver/manual-cases/tc07_block_cannot_enter_edge_goal.json",
+      "title": "TC-07 block cannot enter edge goal",
+      "summary": "Regression case proving that a normal block piece cannot enter an edge goal area reserved for target pieces.",
+      "keywords": ["block cannot enter edge goal", "edge goal target only", "block piece", "forbidden entry"]
+    },
+    {
+      "id": "case.tc07_edge_goal_last_step_only",
+      "type": "case",
+      "source_path": "v1/java-solver/manual-cases/tc07_edge_goal_last_step_only.json",
+      "title": "TC-07 edge goal last step only",
+      "summary": "Regression case for final-step-only edge goal relaxation. Used to verify that normal lane restrictions are only relaxed on the final step into the edge goal.",
+      "keywords": ["edge goal last step only", "final step only", "relaxation", "lane restrictions"]
+    },
+    {
+      "id": "case.tc08_shortest_operation_count",
+      "type": "case",
+      "source_path": "v1/java-solver/manual-cases/tc08_shortest_operation_count.json",
+      "title": "TC-08 shortest operation count",
+      "summary": "Simple shortest-path regression case. Used to verify that the baseline search objective is minimum operation count.",
+      "keywords": ["shortest operation count", "minimum operations", "BFS", "shortest steps"]
+    }
+  ]
+}
